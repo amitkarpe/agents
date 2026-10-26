@@ -29,6 +29,28 @@ current HEAD and dirty state. Reload broader context only when the repository,
 authority, governing file or safety boundary is unclear or changed. Preserve
 unrelated work and stop on conflicting ownership or target identity.
 
+## KISS-FIRST decisions
+
+Choose the smallest useful outcome. Scale investigation to the next action's
+concrete risk, especially irreversible, stateful, costly or privileged effects.
+Expand scope only for demonstrated exposure, a material unknown affecting that
+action, or a governing requirement; a capability or event subscription alone
+does not prove execution. An unknown high-impact effect can still hold that action.
+Reuse accepted proof and stop when the outcome is demonstrated or a specific
+real blocker is established. Before adding a checklist, document, service, test
+or review gate, ask whether less work achieves the same result. Existing hard
+review, security and owner-approval gates remain binding.
+
+For nontrivial work, briefly state **GOAL | REAL BLOCKER | MINIMUM USEFUL ACTION |
+STOP CONDITION** in the existing Issue/PR or plan; do not require a new form for
+routine tasks.
+
+Example: in ami-factory-v2 #15, successful GitGuardian checks establish scanner
+results, not deployment. Unknown repository-specific trigger effects can hold
+the affected push or merge pending targeted evidence or an owner decision;
+an App subscription alone neither proves deployment nor justifies auditing
+unrelated integrations. This illustration grants no push or merge approval.
+
 ## Tight execution loop
 
 For each meaningful wave:
@@ -113,3 +135,7 @@ suppress duplicate blocker wakes. It **cannot** authorize work, change policy
 or expand scope. Do not build a watcher, poll loop or unattended daemon simply
 to support this Goal; deployed wake systems require their own safe-mode
 validation and operational ownership.
+
+## Citations
+
+- [V2 #15 observed checks and unresolved trigger effects](https://github.com/amitkarpe/ami-factory-v2/issues/15#issuecomment-6399777193)
