@@ -24,7 +24,7 @@ A stale branch SHA, auth error or supported-product limitation has its own recov
 
 ## Related
 
-- [Shared Core](CORE.md)
+- [Shared instructions](AGENTS.md)
 - [Goals](GOALS.md)
 - [ChatGPT/Codex collaboration](chatgpt/COLLABORATION.md)
 

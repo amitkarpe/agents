@@ -1,111 +1,85 @@
-# Agent OS Repository Guidance
+---
+type: Policy
+title: Shared Agent Instructions
+description: Keep reusable agent behavior bounded, authority-aware, and separate from local runtime configuration.
+status: reviewed
+scope: Reusable public-safe agent operating defaults
+confidence: high
+timestamp: 2026-10-21T18:35:00+08:00
+review_after: 2027-04-21
+tags: [agents, authority, context, safety, evidence]
+---
 
-## Purpose
+# Shared Agent Instructions
 
-This repository publishes portable operating knowledge for people and software
-agents. Markdown is canonical. Active topics live at the root or in one shallow
-subject folder. The old KB taxonomy and duplicate pointer tree are retired.
+The active project is authoritative for its permissions, specification, goal
+and current state. This public guidance is reusable behavior; it does not
+grant cloud, production, credential, publication or destructive authority.
+When guidance conflicts, follow the narrower active authority and report the
+conflict.
 
-## Contribution Rules
+## Keep concerns separate
 
-- Keep content general, reusable, and safe for a public repository.
-- Never add credentials, authentication state, private infrastructure details,
-  customer information, raw logs, chat transcripts, or local machine paths.
-- Rewrite source learning; do not copy private or third-party documents.
-- Put external source URLs in a `## Citations` section.
-- Use relative Markdown links for repository content.
-- Use only `candidate`, `reviewed`, `verified`, or `deprecated` for lifecycle
-  status.
-- Run `scripts/validate.sh` before committing; it validates canonical root and
-shallow topic documents as well as the transitional `kb/` tree.
+- The project repository owns implementation, approvals, evidence and runtime
+  truth.
+- A provider or host adapter owns setup, authentication, versions, paths and
+  native runtime behavior.
+- Agent OS owns sanitized, reusable knowledge and does not automatically
+  override either of the above.
 
-## Context Loading
+Do not publish credentials, authentication state, private infrastructure,
+customer data, raw sensitive payloads or host-specific inventories. Keep
+provider commands and local paths in their owning adapters.
 
-Use the owning Issue/PR plus its latest relevant authorized delta and current
-HEAD for normal continuation. Treat broad repository read orders as
-bootstrap/recovery guidance, not a per-handoff checklist.
+## Work from current truth
 
-Reload wider context only when the session lacks usable repository context, a
-governing file materially changed, identity/objective is ambiguous, current
-context is stale/incomplete/contradictory/unsafe, or a new authority/safety
-domain requires it. Canonical detail lives in the indexed **Context Loading
-Policy** (`CONTEXT.md`) - load on change, not on
-every turn; do not duplicate that policy across repositories.
+On a cold start, read the owning repository rules, current Issue/PR or goal,
+and current HEAD. On warm continuation, use the smallest changed delta and
+reload broader context only when authority, identity, a governing file or a
+safety boundary is unclear or changed. The
+[Context Loading Policy](CONTEXT.md) defines the
+reload triggers.
 
-For a task that actually coordinates G with a coding agent (direct G -> X
-or an already selected Factory/Manager -> X), explicitly open the
-[G and Coding-Agent Collaboration Protocol](chatgpt/COLLABORATION.md)
-**once** when needed. A link or this entrypoint alone does not mean that
-external guidance has already been read. Skip for unrelated work and reuse
-verified warm context; the owning Issue, local SPEC and approvals override
-reusable guidance.
+Preserve unrelated work. Verify the target repository, branch, dirty state and
+owner before editing. Treat dashboards, process status, transport receipts and
+chat claims as signals; completion requires durable evidence and, for stateful
+work, fresh readback.
 
-## Ownership
+## Change and validation discipline
 
-Agent OS is the canonical home for sanitized, reusable, cross-project operating
-knowledge: principles, policies, repeatable playbooks, dated observations, and
-the lifecycle used to promote or retire that knowledge.
+Prefer deterministic, repeatable repository automation over an AI-only command
+sequence. Use the smallest meaningful validation for the changed risk, then
+stop when the required proof passes. Apply the flat [Testing and Validation
+policy](TESTING.md), [Git Workflow](GIT.md), and [Goals and Delegation](GOALS.md)
+for their respective decisions; do not create a second policy copy.
 
-Ownership roles:
+## Operating principles and critical path
 
-- **Amit** is the policy owner and final decision-maker for durable global
-  standards and public promotion.
-- **G / ChatGPT** is the curator/controller: identify reusable candidates, check
-  for an existing canonical concept, propose sanitized promotion, and check
-  cross-repository consistency.
-- **X / Codex or repository workers** may implement and validate approved
-  changes; implementation authority does not imply policy or publication
-  authority.
+Keep the **intent; remove duplication**. Use owner intent -> relevant discovery
+-> one approved Goal -> bounded implementation -> observable proof -> controller
+acceptance. This is an operating model, not another framework. Identify the
+earliest failed acceptance dependency and address it or its mandatory safety
+prerequisite before optional improvements. Activity and queue receipts are not
+results.
 
-G is also the portfolio controller for `agent-os`, `repo-starter`, and
-`dotfiles`. This role belongs to G, not to one chat session: reconstruct it from
-GitHub truth. Periodically triage open work, deduplicate or close stale work,
-identify reusable learning, canonicalize it in Agent OS, and propagate only
-universal repository defaults to `repo-starter` or local/runtime guidance to
-`dotfiles`. Amit remains the final human authority; X implements or validates
-when delegated.
+End trusted changes in versioned automation, reproducible configuration or a
+reviewable runbook rather than a chat-only recollection. Resolve the approved
+source, pin its exact identity, and distinguish **desired**, **approved**,
+**built** and **observed** state. Do not silently substitute an unapproved
+newer artifact. Keep human material authority while permitting autonomous
+execution within the approved envelope.
 
-Repository responsibilities stay separate:
+Communicate result, evidence, genuine blocker and one next action. Use an
+explicit timezone when it matters; do not claim background work without an
+actual mechanism.
 
-- `agent-os` owns reusable public knowledge and the promotion model.
-- `repo-starter` is a downstream distribution baseline for the smallest
-  mandatory defaults new or retrofitted repositories should start with. It
-  should distill or reference Agent OS guidance rather than become a second
-  knowledge base.
-- `dotfiles` owns local/runtime/tool adapters, host-specific facts, provider
-  preferences, and machine-wide operating defaults in its owning host or native
-  provider configuration. It may reference Agent OS but should not duplicate
-  reusable public policies or depend on the legacy shared-policy tree.
-- Project repositories remain authoritative for their own `AGENTS.md`, `SPEC`,
-  current context, approvals, implementation, evidence, and runtime truth. They
-  are the primary source of new learning candidates.
-- `work` and other active repositories may prove or refine a practice, but once
-  generalized they are not the final global source of truth.
+For a task coordinating G with a coding agent, read the
+[Collaboration Protocol](chatgpt/COLLABORATION.md) once when relevant. Reuse
+unchanged warm context; a link alone does not prove a read.
 
-Candidate material remains outside this public Git repository until it has been
-sanitized, reviewed, and deliberately promoted. Keep one canonical home for a
-reusable concept; extend or cross-link it instead of copying competing policy.
+## When editing this knowledge repository
 
-Use this promotion direction:
-
-`project learning -> reusable candidate -> sanitize/deduplicate -> Agent OS -> repo-starter only when it is a universal repository default`
-
-Critical safety rules may justify proactive retrofit. Normal improvements should
-usually propagate to existing repositories when those repositories are next
-touched.
-
-KISS: **Learn locally. Generalize once. Store canonically. Distribute minimally.**
-
-## Portfolio Economy Defaults
-
-- Testing: default to **zero new tests**, not zero validation. Use the smallest meaningful existing proof and keep required repository checks. The portable [Testing and Validation](TESTING.md) policy owns conditional details; load it when deciding to add, modify or retire tests, not every turn.
-- Git workflows: the portable [Git Workflow](GIT.md) owns bounded Issue/PR and verification conventions. Apply it when repository work needs it, not on every turn; project-specific GitLab/source/merge rules override it.
-- Goals and delegation: the portable [Goals and Delegation](GOALS.md) policy owns bounded continuation, helper boundaries, evidence and stop gates. Apply it when coordinating or executing agent work; provider/runtime details remain local.
-- Shared core and tools: the portable [Shared Agent Core](CORE.md) and [Tool Routing](TOOLS.md) policies own authority/context separation and proportionate tool selection. Keep provider, host and authentication details local.
-- Runners: public repositories may use standard GitHub-hosted runners such as `ubuntu-latest`. Private repositories should avoid GitHub-hosted runners by default and reuse an existing approved CodeBuild/CodePipeline or CodeBuild-hosted Actions runner; do not create new CI infrastructure merely to replace a free public runner.
-- Worktrees: when a PR/Issue closes, review related local worktrees and remove completed, clean, unused **secondary** worktrees only after their work is merged/preserved and no active Codex session, rollback, or uncommitted/untracked work depends on them. Prefer native `git worktree remove` (never `rm -rf` or `--force` by default); leave active, dirty, uncertain, or unmerged work untouched. Batch already-safe cleanup if useful, but do not accumulate abandoned checkouts. Codex 0.162.0 adds managed **create/list** tools behind its worktrees feature; this does **not** imply automatic deletion.
-
-## Citations
-
-- [Codex 0.162.0 managed worktree create/list](https://github.com/openai/codex/releases/tag/rust-v0.162.0)
-- [Git native worktree remove and prune](https://git-scm.com/docs/git-worktree)
+Read [CONTRIBUTING.md](CONTRIBUTING.md) when authoring, validating or publishing
+files in the Agent OS knowledge repository itself. Those repository-specific
+publication and maintenance rules do not apply merely because another project
+reads these shared instructions. The consuming project's rules remain in force.

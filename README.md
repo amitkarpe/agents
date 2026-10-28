@@ -11,7 +11,7 @@ Knowledge is at the root or **one subject directory**. There is no active
 
 | Need | Canonical file |
 | --- | --- |
-| Authority, evidence and core principles | [CORE.md](CORE.md) |
+| Authority, evidence and core principles | [AGENTS.md](AGENTS.md) |
 | One Goal, Fast/Deep plan, delegation | [GOALS.md](GOALS.md) |
 | Cold/warm context and handoffs | [CONTEXT.md](CONTEXT.md) |
 | Knowledge promotion and evidence cleanup | [KNOWLEDGE.md](KNOWLEDGE.md) |
@@ -41,6 +41,17 @@ in dotfiles/native configuration.
 
 ## Task-scoped loading
 
+[AGENTS.md](AGENTS.md) is the shared instruction entrypoint. When editing this
+knowledge repository itself, also read [CONTRIBUTING.md](CONTRIBUTING.md).
+Consumers keep their project instructions and approvals; they do not inherit
+this repository's publication rules.
+
+The standard filename does not guarantee discovery at every global path.
+Use the provider's supported native adapter to select a verified checkout.
+For Codex, a sibling shared directory needs explicit routing from its discovered
+instructions. Source checks, an explicit read and an automatic provider read
+are separate evidence; installing this draft is a later host decision.
+
 Start from the active project's `AGENTS.md`, approved Goal/Issue and current
 HEAD; read **one to three** matching Agent OS topics. Reuse valid warm context.
 A link, checkout or native adapter is not proof that a provider automatically
@@ -57,9 +68,21 @@ Use [CONTRIBUTING.md](CONTRIBUTING.md) for safe knowledge changes.
 Validate with `scripts/validate.sh --self-test` and `scripts/validate.sh`.
 Superseded content remains in Git history, not active copies.
 
+Keep long-term instructions short and stable. Load specialist topics only for
+the current task. Store changing plans, decisions and results in the owning
+project's Issue or current-state files; do not append chat logs to AGENTS.md.
+Keep private host exceptions and skill implementations in their existing
+owners. Review shared changes once in Git instead of copying rules to every
+project and letting those copies drift.
+
 [Issue #62](https://github.com/amitkarpe/agents/issues/62) separately tracks
 the live Home cutover and provider-loading acceptance.
 
 ## License
 
 [Apache-2.0](LICENSE).
+
+## Citations
+
+- [AGENTS.md open format](https://agents.md/)
+- [Codex instruction discovery and scope](https://developers.openai.com/codex/guides/agents-md)

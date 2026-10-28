@@ -183,7 +183,7 @@ scan_public_safety() {
       warn "$file: verified concept has no Citations section"
     fi
   done < <(find "$root" -maxdepth 2 -type f -name '*.md' \
-    ! -name 'AGENTS.md' ! -name 'README.md' ! -name 'CONTRIBUTING.md' \
+    ! -name 'README.md' ! -name 'CONTRIBUTING.md' \
     ! -name 'index.md' -print0)
 }
 
@@ -198,11 +198,17 @@ validate_repo() {
     error "$root/kb: retired taxonomy path must not exist"
   fi
 
-  # Root Markdown topics are canonical; repository entrypoints are not topics.
+  # AGENTS.md is the shared policy topic; source-only rules live in CONTRIBUTING.
+  if [[ ! -f "$root/AGENTS.md" || -L "$root/AGENTS.md" ]]; then
+    error "$root/AGENTS.md: canonical instructions must be a regular file"
+  fi
+  if [[ -e "$root/CORE.md" || -L "$root/CORE.md" ]]; then
+    error "$root/CORE.md: retired duplicate shared policy must not exist"
+  fi
   while IFS= read -r -d '' file; do
     validate_yaml_block "$file" yes
   done < <(find "$root" -maxdepth 1 -type f -name '*.md' \
-    ! -name 'AGENTS.md' ! -name 'README.md' ! -name 'CONTRIBUTING.md' \
+    ! -name 'README.md' ! -name 'CONTRIBUTING.md' \
     ! -name 'index.md' -print0)
 
   # Canonical shallow topics are validated without reintroducing a hierarchy.
@@ -236,6 +242,8 @@ validate_repo() {
 write_fixture() {
   local root="$1" body="$2"
   mkdir -p "$root"
+  printf '%s\n' '---' 'type: Policy' 'status: reviewed' 'confidence: high' \
+    'review_after: 2999-01-01' '---' '' '# Shared instructions' >"$root/AGENTS.md"
   printf '%s\n' "$body" >"$root/CONTEXT.md"
 }
 
@@ -257,6 +265,16 @@ self_test() {
   write_fixture "$pass" $'---\ntype: Practice\ntitle: Valid fixture\nstatus: reviewed\nconfidence: high\nreview_after: 2999-01-01\n---\n\n# Valid fixture'
   "$SELF" "$pass" >/dev/null
   printf 'SELF-TEST PASS: valid repository accepted\n'
+
+  case_dir="$temp/missing-agents"
+  write_fixture "$case_dir" $'---\ntype: Practice\nstatus: reviewed\nconfidence: high\nreview_after: 2999-01-01\n---\n\n# Valid topic'
+  rm -- "$case_dir/AGENTS.md"
+  expect_failure missing-canonical-agents "$case_dir"
+
+  case_dir="$temp/retired-core"
+  write_fixture "$case_dir" $'---\ntype: Practice\nstatus: reviewed\nconfidence: high\nreview_after: 2999-01-01\n---\n\n# Valid topic'
+  cp -- "$case_dir/AGENTS.md" "$case_dir/CORE.md"
+  expect_failure retired-core-policy "$case_dir"
 
   case_dir="$temp/retired-agents"
   write_fixture "$case_dir" $'---\ntype: Practice\nstatus: reviewed\nconfidence: high\nreview_after: 2999-01-01\n---\n\n# Valid concept'

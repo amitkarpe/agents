@@ -13,7 +13,7 @@ tags: [github, oidc, aws, automation, codebuild, ssm]
 
 # GitHub OIDC and AWS-Owned Control
 > **Ownership:** This specialist guide documents one bounded topic. The
-> canonical [Core](../CORE.md), [Goals](../GOALS.md),
+> canonical [Core](../AGENTS.md), [Goals](../GOALS.md),
 > [Context](../CONTEXT.md) and [Safety](../SAFETY.md)
 > rules govern reusable authority and evidence. Project rules and local
 > provider/host configuration still take precedence. A documented command or

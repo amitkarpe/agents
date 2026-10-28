@@ -161,7 +161,7 @@ deploying Runtime are distinct effects, none authorized by reading a guide.
 
 ## Related
 
-- [Shared Core](../CORE.md)
+- [Shared instructions](../AGENTS.md)
 - [Proportional testing](../TESTING.md)
 - [Evidence lifecycle](../KNOWLEDGE.md)
 - [AWS identity, cost and source boundaries](../AWS.md)
