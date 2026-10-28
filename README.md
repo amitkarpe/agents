@@ -32,11 +32,12 @@ Knowledge is at the root or **one subject directory**. There is no active
 | AWS | [Inspector/CIS](aws/INSPECTOR_CIS.md), [SSM and NoReboot](aws/SSM.md), [Images and sharing](aws/IMAGES.md), [Toolkit](aws/TOOLKIT.md), [AgentCore](aws/AGENTCORE.md), [OIDC and durable control](aws/OIDC.md) |
 | Codex | [Sessions and Goals](codex/SESSIONS.md), [Native delegation](codex/DELEGATION.md), [Worker control](codex/CONTROL.md), [Skills](codex/SKILLS.md) |
 | ChatGPT | [Collaboration](chatgpt/COLLABORATION.md), [Projects](chatgpt/PROJECTS.md), [Automations](chatgpt/AUTOMATIONS.md) |
-| Tools | [Recipes and Git-aware search](tools/RECIPES.md), [Browser evidence](tools/BROWSER.md), [Playwright/WSL](tools/PLAYWRIGHT.md), [X/Grok research](tools/RESEARCH.md) |
+| Tools | [Recipes and Git-aware search](tools/RECIPES.md), [Browser evidence](tools/BROWSER.md), [Playwright/WSL](tools/PLAYWRIGHT.md), [X/Grok research](tools/RESEARCH.md), [RTK/raw output](tools/RTK.md), [Private artifacts](tools/PRIVATE_ARTIFACTS.md), [Presentations](tools/PRESENTATIONS.md), [Email](tools/EMAIL.md) |
+| Kiro | [Worker scope, artifacts and recovery](kiro/WORKERS.md) |
+| OpenCode | [Worker JSONL, liveness and recovery](opencode/WORKERS.md) |
 
-Create `kiro/` and `opencode/` only for genuinely reusable public-safe
-instructions, not placeholder directories. Local installed versions, account
-settings and provider-specific secrets belong in dotfiles/native configuration.
+Local installed versions, account settings and provider-specific secrets belong
+in dotfiles/native configuration.
 
 ## Task-scoped loading
 
