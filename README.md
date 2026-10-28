@@ -21,6 +21,7 @@ Knowledge is at the root or **one subject directory**. There is no active
 | Validation economy | [TESTING.md](TESTING.md) |
 | Tool selection | [TOOLS.md](TOOLS.md) |
 | Terraform change and drift | [TERRAFORM.md](TERRAFORM.md) |
+| AWS identity, sources, lifecycle and cost | [AWS.md](AWS.md) |
 | Repository foundation/runtime decisions | [REPOSITORIES.md](REPOSITORIES.md) |
 | Cloudflare demo deployment | [CLOUDFLARE.md](CLOUDFLARE.md) |
 
@@ -28,7 +29,7 @@ Knowledge is at the root or **one subject directory**. There is no active
 
 | Area | Topics |
 | --- | --- |
-| AWS | [AgentCore](aws/AGENTCORE.md), [OIDC and durable control](aws/OIDC.md) |
+| AWS | [Inspector/CIS](aws/INSPECTOR_CIS.md), [SSM and NoReboot](aws/SSM.md), [Images and sharing](aws/IMAGES.md), [Toolkit](aws/TOOLKIT.md), [AgentCore](aws/AGENTCORE.md), [OIDC and durable control](aws/OIDC.md) |
 | Codex | [Sessions and Goals](codex/SESSIONS.md), [Native delegation](codex/DELEGATION.md), [Worker control](codex/CONTROL.md), [Skills](codex/SKILLS.md) |
 | ChatGPT | [Collaboration](chatgpt/COLLABORATION.md), [Projects](chatgpt/PROJECTS.md), [Automations](chatgpt/AUTOMATIONS.md) |
 | Tools | [Recipes and Git-aware search](tools/RECIPES.md), [Browser evidence](tools/BROWSER.md), [Playwright/WSL](tools/PLAYWRIGHT.md), [X/Grok research](tools/RESEARCH.md) |
