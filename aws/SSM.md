@@ -107,18 +107,45 @@ Do not run a new send every time an observer stops waiting.
 
 ## Wait-only and output-only recovery
 
-For an existing request, keep exact target and CommandId:
+For an existing request, keep exact target and CommandId. These are separate
+recovery paths, not reasons to send the payload again.
+
+### Observe existing per-target/plugin state
 
 ```bash
 aws --profile '<PROFILE>' --region '<REGION>' ssm list-command-invocations \
   --command-id '<COMMAND_ID>' --details --output json > ssm-invocations.json
+```
+
+### Wait for the existing invocation
+
+For a suitable single-plugin command, a bounded CLI waiter can observe the
+same request:
+
+```bash
+aws --profile '<PROFILE>' --region '<REGION>' ssm wait command-executed \
+  --command-id '<COMMAND_ID>' --instance-id '<INSTANCE_ID>'
+```
+
+A waiter has its own poll/attempt budget. Its nonzero exit does not cancel
+the command or prove a new send is safe; inspect the same ID's current status.
+Use the owning bounded wait wrapper when the command/plugin or expected
+duration does not fit that waiter.
+
+### Fetch and retain output from the existing invocation
+
+```bash
 aws --profile '<PROFILE>' --region '<REGION>' ssm get-command-invocation \
   --command-id '<COMMAND_ID>' --instance-id '<INSTANCE_ID>' \
   --output json > ssm-invocation.json
+jq -r '.StandardOutputContent' ssm-invocation.json > ssm-stdout.log
+jq -r '.StandardErrorContent' ssm-invocation.json > ssm-stderr.log
 ```
 
-Use the document's exact plugin name for a multi-plugin invocation when
-required; it is not necessarily the document name. A bounded
+For a multi-step document, use the step name exposed by
+`CommandPlugins[].Name` as `--plugin-name`, not the document title or the
+plugin type such as `aws:RunShellScript`. The same applies to the waiter.
+A bounded
 `aws ssm wait command-executed` or the owning wait wrapper may be suitable,
 but a waiter error requires inspection of the same ID, not a repeated send.
 Allow for initial service consistency without changing target identity.
@@ -140,6 +167,18 @@ Public results use sanitized aliases; raw account/instance IDs and payloads
 remain in the approved project evidence location.
 
 ## Failure triage
+
+Reduce a saved response into a diagnostic view while retaining the original:
+
+```bash
+jq '{CommandId,InstanceId,PluginName,Status,StatusDetails,ResponseCode,
+  ExecutionStartDateTime,ExecutionEndDateTime,
+  StandardOutputUrl,StandardErrorUrl}' ssm-invocation.json > ssm-diagnostic.json
+```
+
+That projection is a triage aid, not an assertion of success. Inspect the
+correlated stderr/plugin log and workload evidence privately; empty inline
+output is not proof the node did nothing.
 
 | Symptom | First checks | Avoid |
 | --- | --- | --- |
@@ -205,6 +244,7 @@ not proof that Docker/containerd/application health stayed intact.
 - [SSM status, aggregation and timeout semantics](https://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-commands.html)
 - [SendCommand reference](https://docs.aws.amazon.com/cli/latest/reference/ssm/send-command.html)
 - [GetCommandInvocation reference](https://docs.aws.amazon.com/cli/latest/reference/ssm/get-command-invocation.html)
+- [Bounded command-executed waiter](https://docs.aws.amazon.com/cli/latest/reference/ssm/wait/command-executed.html)
 - [Run Command troubleshooting](https://docs.aws.amazon.com/systems-manager/latest/userguide/troubleshooting-remote-commands.html)
 - [RunPatchBaseline and NoReboot](https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-aws-runpatchbaseline.html)
 - [Patch compliance states](https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-compliance-states.html)
