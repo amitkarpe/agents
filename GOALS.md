@@ -66,6 +66,14 @@ Do not create a watcher, daemon, framework or duplicate runner merely to keep a
 goal moving. A long command may be bounded and interruptible, but a process
 status or agent display is not completion evidence.
 
+For already-authorized long-running work, retain the owner, exact task/process
+identity (PID/group or provider ID as applicable), latest checkpoint, last
+observed progress and next readback condition in durable evidence. Distinguish
+running, stalled, interrupted and terminal states; silence alone proves none
+of them. A delayed one-shot command is not a durable watcher and does not
+survive process/session loss by assumption. Recovery must reconcile the saved
+identity and artifacts before resuming or replacing work.
+
 ## Delegation
 
 Delegate only an independently answerable question that saves meaningful
@@ -139,3 +147,4 @@ validation and operational ownership.
 ## Citations
 
 - [V2 #15 observed checks and unresolved trigger effects](https://github.com/amitkarpe/ami-factory-v2/issues/15#issuecomment-6399777193)
+- [Pinned long-running-work distinction](https://github.com/amitkarpe/dotfiles/blob/5685eea054e1fbd4499ea4631e86014654f774d0/config/.config/agent/LOOP.md)

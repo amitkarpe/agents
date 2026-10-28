@@ -22,7 +22,7 @@ tags: [gitlab, github, runner, mirror, oidc, ci, preparation, security, offline]
 
 Use GitLab Runner as a replaceable connected execution host, not as the source of application truth.
 
-Canonical pattern:
+One supported pattern (only when selected by the owning project):
 
     canonical source repository
       -> internal GitLab pull mirror
@@ -34,7 +34,11 @@ Canonical pattern:
 
 ## 1. Keep one source authority
 
-When GitHub is canonical and GitLab exists for internal CI/CD, use GitHub -> GitLab Pull mirror -> GitLab CI/Runner.
+When the project selects a GitHub-primary pull mirror, use GitHub -> GitLab
+Pull mirror -> GitLab CI/Runner. Other projects may explicitly select controlled
+main-only publication and forbid native repository mirroring. Verify that
+actual model; this guide does not normalize one into the other or authorize
+changing settings. GitLab-primary repositories are separately governed.
 
 Do not configure push or bidirectional mirroring unless the project explicitly requires a different authority model.
 
@@ -211,6 +215,77 @@ Project repositories own scripts, CI files, permissions, runner tags, and runtim
 
 Do not turn Agent OS into a copy of one project implementation.
 
+## 13. Host, MR and push-rule diagnostics
+
+This guide is knowledge, not permission to authenticate, publish or change
+GitLab settings. First bind the intended host/project, remote, current identity,
+approved source model and exact branch SHA. A local SSH account key does not
+provision GitLab's server-side mirror credential.
+
+For an authorized diagnostic read, with host/project chosen by the owner:
+
+```bash
+git remote -v
+glab config get host
+glab auth status --hostname "$approved_gitlab_host"
+glab api --hostname "$approved_gitlab_host" "projects/$approved_project_id/push_rule"
+```
+
+Inspect authentication output privately; do not print tokens/configuration.
+Wrong host, wrong remote protocol, wrong identity, missing project permission
+and inherited push rules are different failures. A 403 may be a visibility
+limitation; it is not proof that a project/runner does not exist.
+
+Normal issue/MR command shapes include `glab issue view <id>`,
+`glab mr create --draft`, `glab mr view <id>` and `glab mr update <id>`.
+Use the owning project's readiness, body and merge rules; “draft early” is a
+workflow option, not authority to create duplicate MRs or merge them. Keep the
+problem/result, validation and material risk concise; link the owning issue
+using that project's resolver convention.
+
+### Inspect fields before proposing a change
+
+| Concern | Project push-rule field |
+| --- | --- |
+| Committer email belongs to the pusher's verified emails | `commit_committer_check` |
+| Commit author name consistent with GitLab account name | `commit_committer_name_check` |
+| Signed commits | `reject_unsigned_commits` |
+| DCO requirement | `reject_non_dco_commits` |
+| Tag deletion | `deny_delete_tag` |
+| Author membership | `member_check` |
+| Secret-file prevention | `prevent_secrets` |
+
+Inspect current API/version semantics and inherited policy before interpreting
+these fields. Keep secret prevention enabled unless a separately reviewed
+exception explicitly covers it. Never translate this table into a blanket
+“set everything false” migration profile.
+
+Some API fields return null when disabled; an unconfigured project can return
+a different null-shaped response. Do not coerce every missing/null value into
+an asserted false setting or assume a project response exhausts inherited policy.
+
+For example, **only if the exact project/field/value exception has been
+approved**, the API shape for changing one field and reading it back is:
+
+```bash
+glab api --hostname "$approved_gitlab_host" --method PUT \
+  "projects/$approved_project_id/push_rule" \
+  --field commit_committer_check=false
+glab api --hostname "$approved_gitlab_host" \
+  "projects/$approved_project_id/push_rule"
+```
+
+Preserve the private preimage, compare every relevant field after the update,
+and verify the selected exception actually took effect. Do not expand the
+exception if a group/instance policy still blocks publication. Report that
+authority boundary. This changes neither branch protection, authentication,
+CI controls nor authorization to publish. Preserve canonical history rather
+than rewriting/re-signing it merely to satisfy a secondary's inherited rules.
+
+A claimed publication needs accepted target ref/SHA and side-effect evidence,
+not only API success or an MR/mirror UI label. Respect the selected main-only
+scope, pending writers, ancestry/no-force checks and existing CI triggers.
+
 ## Citations
 
 - https://github.com/amitkarpe/nextflow-offline/issues/22
@@ -222,3 +297,6 @@ Do not turn Agent OS into a copy of one project implementation.
 - https://github.com/amitkarpe/nextflow-offline/pull/29
 - https://github.com/amitkarpe/nextflow-offline/pull/39
 - https://github.com/amitkarpe/cloudos-offline/pull/6
+- [Pinned GitLab diagnostics and project-authority distinction](https://github.com/amitkarpe/dotfiles/blob/5685eea054e1fbd4499ea4631e86014654f774d0/config/.config/agent/GITLAB.md)
+- [GitLab project push rules API](https://docs.gitlab.com/api/project_push_rules/)
+- [GitLab CLI reference](https://docs.gitlab.com/cli/)
