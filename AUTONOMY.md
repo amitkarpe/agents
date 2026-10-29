@@ -2,7 +2,7 @@
 type: Policy
 title: 1000X Single-Agent Autonomy
 description: One owner-selected agent owns repository work end to end without routine human, G or second-agent approval.
-status: candidate
+status: reviewed
 scope: Reusable repository-development autonomy; no cloud or production grant
 confidence: high
 review_after: 2027-04-29
@@ -93,15 +93,15 @@ handoff packets.
 
 ## Adopted V2 repositories
 
-- [Patching V2](https://github.com/amitkarpe/patching-v2/blob/main/AGENTS.md):
-  repository-only design, code, documentation and synthetic tests; live SSM
-  patch/canary approvals remain separate.
-- [Trustdev V2](https://github.com/amitkarpe/trustdev-v2/blob/main/AGENTS.md):
-  repository-only consumer verification and synthetic tests; image/provider
-  access, cloud workload and promotion boundaries remain separate.
-- [AMI Factory V2](https://github.com/amitkarpe/ami-factory-v2/blob/main/AGENTS.md):
-  repository-only source and offline preflight; live IAM/Terraform, build,
-  GitLab changes and image promotion retain their existing gates.
+- **Patching V2:** its `AGENTS.md` adopts this policy for repository-only
+  source, offline design and synthetic checks. Live SSM patch/canary approval
+  is separate.
+- **Trustdev V2:** its `AGENTS.md` adopts this policy for repository-only
+  consumer-verification code and tests. Provider/image/cloud permissions and
+  promotion remain separate.
+- **AMI Factory V2:** its `AGENTS.md` adopts this policy for repository-only
+  offline preflight and source. Live IAM/Terraform, GitLab, build and image
+  promotion gates remain separate.
 
 ## Related
 
@@ -109,3 +109,9 @@ handoff packets.
 - [Git Workflow](GIT.md)
 - [Shared Core](CORE.md)
 - [Connector Safety](SAFETY.md)
+
+## Citations
+
+- [Patching V2 adopting instructions](https://github.com/amitkarpe/patching-v2/blob/main/AGENTS.md)
+- [Trustdev V2 adopting instructions](https://github.com/amitkarpe/trustdev-v2/blob/main/AGENTS.md)
+- [AMI Factory V2 adopting instructions](https://github.com/amitkarpe/ami-factory-v2/blob/main/AGENTS.md)
