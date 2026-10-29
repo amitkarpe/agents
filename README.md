@@ -12,6 +12,7 @@ Knowledge is at the root or **one subject directory**. There is no active
 | Need | Canonical file |
 | --- | --- |
 | Authority, evidence and core principles | [CORE.md](CORE.md) |
+| **One-agent 1000X repository autonomy (opt-in)** | [AUTONOMY.md](AUTONOMY.md) |
 | One Goal, Fast/Deep plan, delegation | [GOALS.md](GOALS.md) |
 | Cold/warm context and handoffs | [CONTEXT.md](CONTEXT.md) |
 | Knowledge promotion and evidence cleanup | [KNOWLEDGE.md](KNOWLEDGE.md) |
