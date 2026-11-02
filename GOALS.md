@@ -29,6 +29,28 @@ current HEAD and dirty state. Reload broader context only when the repository,
 authority, governing file or safety boundary is unclear or changed. Preserve
 unrelated work and stop on conflicting ownership or target identity.
 
+## KISS-FIRST decisions
+
+Choose the smallest useful outcome. Scale investigation to the next action's
+concrete risk, especially irreversible, stateful, costly or privileged effects.
+Expand scope only for demonstrated exposure, a material unknown affecting that
+action, or a governing requirement; a capability or event subscription alone
+does not prove execution. An unknown high-impact effect can still hold that action.
+Reuse accepted proof and stop when the outcome is demonstrated or a specific
+real blocker is established. Before adding a checklist, document, service, test
+or review gate, ask whether less work achieves the same result. Existing hard
+review, security and owner-approval gates remain binding.
+
+For nontrivial work, briefly state **GOAL | REAL BLOCKER | MINIMUM USEFUL ACTION |
+STOP CONDITION** in the existing Issue/PR or plan; do not require a new form for
+routine tasks.
+
+Example: in ami-factory-v2 #15, successful GitGuardian checks establish scanner
+results, not deployment. Unknown repository-specific trigger effects can hold
+the affected push or merge pending targeted evidence or an owner decision;
+an App subscription alone neither proves deployment nor justifies auditing
+unrelated integrations. This illustration grants no push or merge approval.
+
 ## Tight execution loop
 
 For each meaningful wave:
@@ -43,6 +65,14 @@ For each meaningful wave:
 Do not create a watcher, daemon, framework or duplicate runner merely to keep a
 goal moving. A long command may be bounded and interruptible, but a process
 status or agent display is not completion evidence.
+
+For already-authorized long-running work, retain the owner, exact task/process
+identity (PID/group or provider ID as applicable), latest checkpoint, last
+observed progress and next readback condition in durable evidence. Distinguish
+running, stalled, interrupted and terminal states; silence alone proves none
+of them. A delayed one-shot command is not a durable watcher and does not
+survive process/session loss by assumption. Recovery must reconcile the saved
+identity and artifacts before resuming or replacing work.
 
 ## Delegation
 
@@ -113,3 +143,8 @@ suppress duplicate blocker wakes. It **cannot** authorize work, change policy
 or expand scope. Do not build a watcher, poll loop or unattended daemon simply
 to support this Goal; deployed wake systems require their own safe-mode
 validation and operational ownership.
+
+## Citations
+
+- [V2 #15 observed checks and unresolved trigger effects](https://github.com/amitkarpe/ami-factory-v2/issues/15#issuecomment-6399777193)
+- [Pinned long-running-work distinction](https://github.com/amitkarpe/dotfiles/blob/5685eea054e1fbd4499ea4631e86014654f774d0/config/.config/agent/LOOP.md)

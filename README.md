@@ -12,6 +12,7 @@ Knowledge is at the root or **one subject directory**. There is no active
 | Need | Canonical file |
 | --- | --- |
 | Authority, evidence and core principles | [AGENTS.md](AGENTS.md) |
+| **1000X single-agent DEV AWS and repository autonomy (opt-in)** | [AUTONOMY.md](AUTONOMY.md) |
 | One Goal, Fast/Deep plan, delegation | [GOALS.md](GOALS.md) |
 | Cold/warm context and handoffs | [CONTEXT.md](CONTEXT.md) |
 | Knowledge promotion and evidence cleanup | [KNOWLEDGE.md](KNOWLEDGE.md) |
@@ -21,6 +22,7 @@ Knowledge is at the root or **one subject directory**. There is no active
 | Validation economy | [TESTING.md](TESTING.md) |
 | Tool selection | [TOOLS.md](TOOLS.md) |
 | Terraform change and drift | [TERRAFORM.md](TERRAFORM.md) |
+| AWS identity, sources, lifecycle and cost | [AWS.md](AWS.md) |
 | Repository foundation/runtime decisions | [REPOSITORIES.md](REPOSITORIES.md) |
 | Cloudflare demo deployment | [CLOUDFLARE.md](CLOUDFLARE.md) |
 
@@ -28,14 +30,15 @@ Knowledge is at the root or **one subject directory**. There is no active
 
 | Area | Topics |
 | --- | --- |
-| AWS | [AgentCore](aws/AGENTCORE.md), [OIDC and durable control](aws/OIDC.md) |
+| AWS | [Inspector/CIS](aws/INSPECTOR_CIS.md), [SSM and NoReboot](aws/SSM.md), [Images and sharing](aws/IMAGES.md), [Toolkit](aws/TOOLKIT.md), [AgentCore](aws/AGENTCORE.md), [OIDC and durable control](aws/OIDC.md) |
 | Codex | [Sessions and Goals](codex/SESSIONS.md), [Native delegation](codex/DELEGATION.md), [Worker control](codex/CONTROL.md), [Skills](codex/SKILLS.md) |
 | ChatGPT | [Collaboration](chatgpt/COLLABORATION.md), [Projects](chatgpt/PROJECTS.md), [Automations](chatgpt/AUTOMATIONS.md) |
-| Tools | [Recipes and Git-aware search](tools/RECIPES.md), [Browser evidence](tools/BROWSER.md), [Playwright/WSL](tools/PLAYWRIGHT.md), [X/Grok research](tools/RESEARCH.md) |
+| Tools | [Recipes and Git-aware search](tools/RECIPES.md), [Browser evidence](tools/BROWSER.md), [Playwright/WSL](tools/PLAYWRIGHT.md), [X/Grok research](tools/RESEARCH.md), [RTK/raw output](tools/RTK.md), [Private artifacts](tools/PRIVATE_ARTIFACTS.md), [Presentations](tools/PRESENTATIONS.md), [Email](tools/EMAIL.md) |
+| Kiro | [Worker scope, artifacts and recovery](kiro/WORKERS.md) |
+| OpenCode | [Worker JSONL, liveness and recovery](opencode/WORKERS.md) |
 
-Create `kiro/` and `opencode/` only for genuinely reusable public-safe
-instructions, not placeholder directories. Local installed versions, account
-settings and provider-specific secrets belong in dotfiles/native configuration.
+Local installed versions, account settings and provider-specific secrets belong
+in dotfiles/native configuration.
 
 ## Task-scoped loading
 

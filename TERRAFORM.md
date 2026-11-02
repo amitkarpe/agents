@@ -44,3 +44,16 @@ IaC source and state afterward, then verify the live result. For AWS-controlled
 mutations, follow the [GitHub OIDC and AWS-Owned Control
 playbook](aws/OIDC.md); its bounded
 execution and uncertain-retry gates remain there.
+
+## Concrete drift warnings during diagnosis
+
+Requests to "sync scripts to the account", make a manual endpoint/security-group
+fix, or "make it work now, Terraform later" can turn accidental drift into an
+unreviewed baseline. Establish intended ownership before adopting observed
+state. A bounded proof instance or test image does not authorize persistent
+changes to shared IAM, networking, endpoints or account controls.
+
+Inspect live state, compare configuration/state/design, classify the fault,
+make the durable IaC correction, and verify after its reviewed apply.
+Use [image lineage and consumption](aws/IMAGES.md) for image-specific evidence;
+provider/worker role names do not grant any of these writes.
