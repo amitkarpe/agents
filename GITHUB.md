@@ -33,9 +33,12 @@ workflows in [GIT.md](GIT.md).
 4. Address actionable P1/P2 and higher-severity findings or explain with
    evidence why a finding does not apply. Check inline threads as well as
    the summary. Do not confuse "no findings" with "no review".
-5. If a material fix changes HEAD, reconcile Codex feedback against the
-   **new** head before merging. A review of an older commit is not proof
-   that the updated diff was reviewed.
+5. If a material fix changes HEAD, check whether Codex review for the
+   **new** head has already started or completed. If not, check for an
+   existing request, then comment `@codex review` **once** on the PR and
+   use the same bounded wait and readback above. Reconcile an in-progress
+   request instead of posting duplicates. Feedback on an older commit is
+   not proof that the updated diff was reviewed.
 6. Merge autonomously **only** when current-head review feedback has been
    evaluated, the required checks pass, the PR remains in authorized scope,
    and branch/ruleset protections permit the merge. No routine owner GO
