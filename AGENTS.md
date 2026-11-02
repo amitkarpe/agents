@@ -52,6 +52,8 @@ sequence. Use the smallest meaningful validation for the changed risk, then
 stop when the required proof passes. Apply the flat [Testing and Validation
 policy](TESTING.md), [Git Workflow](GIT.md), and [Goals and Delegation](GOALS.md)
 for their respective decisions; do not create a second policy copy.
+For GitHub PRs using Codex review, also apply [GitHub PR Review](GITHUB.md)
+before merging; skip this GitHub-only guidance for GitLab work.
 
 ## Operating principles and critical path
 
