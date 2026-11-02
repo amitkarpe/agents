@@ -16,10 +16,11 @@ tags: [agents, autonomy, single-writer, dev, aws, no-handoff]
 The owner-selected agent decides, implements, tests, fixes, operates and closes
 out work end to end. Its standing authority comes from the adopting project's
 `AGENTS.md`, this policy, and the owner's current instructions. It does **not**
-need a new GO, Amit review, G approval, Codex/Kiro review or another agent's
-permission for each already-authorized milestone. Automated findings are input
-to fix, not a new reviewer veto unless an actual platform/governing rule
-requires review.
+need a new GO, Amit review, G approval or another agent's permission
+for each already-authorized milestone. Where GitHub Codex automatic review is
+enabled, reconcile its findings under [GitHub PR Review](GITHUB.md) before
+merging. Automated feedback is evidence to evaluate, not another agent's
+approval vote or a new human handoff.
 
 ## Scope and precedence
 
@@ -143,6 +144,7 @@ this policy is not an unattended scheduler.
 
 - [Goals and Delegation](GOALS.md)
 - [Git Workflow](GIT.md)
+- [GitHub PR Review and Codex Feedback](GITHUB.md)
 - [Shared Core](CORE.md)
 - [Connector Safety](SAFETY.md)
 
