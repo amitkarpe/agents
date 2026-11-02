@@ -285,7 +285,7 @@ be ready. CI or a merged PR does not prove a rollout or whole roadmap complete.
 
 Use existing repo-owned scripts, CI or platform-native procedures for repeated
 operations. Reference the
-[portfolio testing-economy policy](../AGENTS.md#portfolio-economy-defaults)
+[testing-economy policy](../TESTING.md)
 and its existing exceptions rather than copying it. Zero new tests by default is
 not zero validation: use the smallest sufficient existing/native/runtime proof.
 Stop when required proof passes; do not add duplicate validators or a test framework.
