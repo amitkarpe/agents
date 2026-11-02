@@ -14,7 +14,7 @@ tags: [agents, terraform, state, drift, infrastructure]
 
 The owning repository defines the intended infrastructure and approval gates;
 this guide does not grant permission to change cloud resources or state. Use
-[Shared Agent Core](CORE.md) for source authority and
+[Shared Agent Instructions](AGENTS.md) for source authority and
 [Testing and Validation](TESTING.md) for proportionate checks.
 
 ## Establish the exact target

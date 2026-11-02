@@ -33,7 +33,7 @@ Before retiring older files, inventory active consumers, preserve unique content
 
 ## Related
 
-- [Core authority](CORE.md)
+- [Core authority](AGENTS.md)
 - [Goals and delegation](GOALS.md)
 - [Connector safety](SAFETY.md)
 - [ChatGPT/Codex collaboration](chatgpt/COLLABORATION.md)

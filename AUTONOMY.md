@@ -145,7 +145,7 @@ this policy is not an unattended scheduler.
 - [Goals and Delegation](GOALS.md)
 - [Git Workflow](GIT.md)
 - [GitHub PR Review and Codex Feedback](GITHUB.md)
-- [Shared Core](CORE.md)
+- [Shared Instructions](AGENTS.md)
 - [Connector Safety](SAFETY.md)
 
 ## Citations

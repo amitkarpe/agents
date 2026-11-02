@@ -13,7 +13,7 @@ tags: [chatgpt, coding-agents, github, review, delegation, milestones]
 
 # G and Coding-Agent Collaboration Protocol
 > **Ownership:** This specialist guide documents one bounded topic. The
-> canonical [Core](../CORE.md), [Goals](../GOALS.md),
+> canonical [Core](../AGENTS.md), [Goals](../GOALS.md),
 > [Context](../CONTEXT.md) and [Safety](../SAFETY.md)
 > rules govern reusable authority and evidence. Project rules and local
 > provider/host configuration still take precedence. A documented command or
@@ -265,7 +265,7 @@ and appropriately private evidence pointers; publication remains deliberate.
 
 ## Next-step selection gate
 
-Apply [Critical Path First](../CORE.md#operating-principles-and-critical-path).
+Apply [Critical Path First](../AGENTS.md#operating-principles-and-critical-path).
 Finish the approved goal before optional work. Surface the earliest failed
 dependency and required authority/proof instead of filling a wait with unrelated
 validators, tests or framework improvements.
@@ -285,7 +285,7 @@ be ready. CI or a merged PR does not prove a rollout or whole roadmap complete.
 
 Use existing repo-owned scripts, CI or platform-native procedures for repeated
 operations. Reference the
-[portfolio testing-economy policy](../AGENTS.md#portfolio-economy-defaults)
+[testing-economy policy](../TESTING.md)
 and its existing exceptions rather than copying it. Zero new tests by default is
 not zero validation: use the smallest sufficient existing/native/runtime proof.
 Stop when required proof passes; do not add duplicate validators or a test framework.
@@ -345,10 +345,9 @@ acceptance. Do not repeat this checklist on every status request.
 
 ## Related playbooks
 
-- [Agent Operating Principles](../CORE.md)
+- [Agent Operating Principles](../AGENTS.md)
 - [Context Loading Economy](../CONTEXT.md)
 - [Codex Native Controller-Worker Protocol](../codex/DELEGATION.md)
 - [Controller-Worker Goal Execution Framework](../GOALS.md)
 - [Completion Notification without Polling](../GOALS.md)
 - [Knowledge Lifecycle and Publication](../KNOWLEDGE.md)
-

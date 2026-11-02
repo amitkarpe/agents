@@ -12,7 +12,7 @@ tags: [aws, identity, authentication, networking, lifecycle, evidence]
 
 # AWS Identity, Sources and Operational Evidence
 
-Use this for AWS work, alongside the owning project and [Core](CORE.md).
+Use this for AWS work, alongside the owning project and [Shared Instructions](AGENTS.md).
 Documentation access, authenticated inspection, mutation and host setup are
 different operations. This policy grants none of them. Examples below are
 templates, not evidence that a profile, tool, endpoint or resource exists.

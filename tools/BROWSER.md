@@ -13,7 +13,7 @@ tags: [browser, e2e, screenshots, testing, automation, wsl]
 # Agent-Run Browser E2E and Screenshot Evidence
 > **Scope:** Specialist implementation reference, not permission to install,
 > access a private host, deploy infrastructure or run a paid browser provider.
-> Follow the active project's Goal and [canonical Core](../CORE.md),
+> Follow the active project's Goal and [canonical Core](../AGENTS.md),
 > [Goals](../GOALS.md) and [Testing](../TESTING.md).
 > Validate current tool capabilities on the actual execution host.
 
