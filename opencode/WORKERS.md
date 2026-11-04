@@ -1,18 +1,119 @@
 ---
 type: Playbook
-title: OpenCode Worker Evidence and Recovery
+title: OpenCode Quick Start, Model Selection and Worker Recovery
 status: candidate
 confidence: medium
-scope: Portable headless sessions, JSONL, liveness and artifact acceptance
+scope: OpenCode Go model selection, headless sessions, JSONL, liveness and artifact acceptance
 review_after: 2027-01-28
 tags: [opencode, workers, jsonl, sessions, recovery]
 ---
 
-# OpenCode Worker Evidence and Recovery
+# OpenCode: Models, CLI and Worker Recovery
 
 The owning project selects provider/model, permissions, execution directory and
 task authority. Neither `--auto` nor a model name grants broader access.
 Use [Goals and Delegation](../GOALS.md) for the shared task/result contract.
+
+## Quick start: OpenCode Go models (reviewed 4 Nov 2026)
+
+**One canonical entrypoint:** this file covers model selection and worker recovery.
+The owning host's native OpenCode configuration remains the runtime source of truth.
+Model availability, variants, subscriptions, and pricing can change. Check them
+with the installed OpenCode version and the active OpenCode Go account.
+
+### Connect and inspect
+
+```bash
+opencode --version
+opencode auth list                 # provider names only; never publish credentials
+opencode models opencode-go        # confirm actual model IDs and availability
+opencode                            # starts the terminal UI
+```
+
+In the terminal UI use `/connect` to authenticate **OpenCode Go**, then
+`/models` to choose an available model. Do not paste tokens into a repository
+file, shell command, issue, or captured terminal log. OpenCode Go lists
+DeepSeek V4.1 Flash and GLM-5.3-Flash in its current official model catalog.
+The provider/model identifiers below are **proposed examples**; confirm the
+exact output of `opencode models opencode-go` before storing them.
+
+### Choose the default and reasoning variant
+
+**Preferred:** DeepSeek V4.1 Flash as the interactive default, with `high`
+reasoning **only if that model/provider exposes the variant**. Not every
+model supports every reasoning level. `max` and `high` are not interchangeable
+provider guarantees.
+
+OpenCode reads the root `model` property in `opencode.json` or
+`opencode.jsonc`. An example, **not deployed by this guide**:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode-go/deepseek-v4.1-flash"
+}
+```
+
+A global preference belongs in the machine's own OpenCode config. A repo-local
+config is only appropriate when that repo has approved that preference. The
+root model selection does **not** pin the reasoning variant.
+
+Use explicit arguments for one-off runs:
+
+```bash
+opencode --model opencode-go/deepseek-v4.1-flash
+opencode run --model opencode-go/deepseek-v4.1-flash --variant high "Summarize this repository; read only."
+```
+
+For a supported installed version, `--model` selects `provider/model` and
+`--variant` requests a model-supported variant. First verify
+`opencode run --help` and an inexpensive read-only response. If `high` is
+unsupported, omit it; do not label the default response 'high' without proof.
+
+### Secondary choice: GLM-5.3-Flash
+
+```bash
+opencode run --model opencode-go/glm-5.3-flash "Summarize this repository; read only."
+```
+
+**Fallback is a decision, not an automatic promise.** The documented root
+`small_model` option controls lightweight tasks such as titles; it is **not**
+a guaranteed failover target for the main model. No verified built-in config
+entry automatically switches a failed DeepSeek task to GLM.
+
+On a provider rate limit, auth failure, unsupported variant, or interrupted
+run: preserve the original session and evidence; reconcile any side effects;
+then explicitly choose GLM for a **new approved bounded attempt**. Do not
+silently replay a state-changing prompt or launch duplicate workers. A
+task already in progress keeps its stated ownership, budget, and permissions.
+
+### Five-line decision table
+
+| Need | Selection | Guard |
+| --- | --- | --- |
+| Everyday interactive work | DeepSeek V4.1 Flash | Set `model` once in native config |
+| One deeper task | DeepSeek V4.1 Flash + `--variant high` | Verify `high` exists before use |
+| Provider unavailable | GLM-5.3-Flash | Manual selection after reconciling original session |
+| Lightweight helper work | `small_model` if wanted | Not a primary-model failure fallback |
+| Exact reproducible worker | Explicit `--model`, `--variant`, session, cwd | Verify artifacts; never infer success from exit 0 |
+
+### Which files should remain?
+
+- **Keep this file** as the one OpenCode topic in Agent OS.
+- **Deletion candidate, not approved:** the older
+  [dotfiles OpenCode contract](https://github.com/amitkarpe/dotfiles/blob/5685eea054e1fbd4499ea4631e86014654f774d0/config/.config/agent/OPENCODE.md).
+  Audit global loaders, `oo` wrapper usage, and unique host/runtime guidance
+  before deleting or replacing it with a short pointer. Cross-repository
+  deletion belongs to a separate reviewed action.
+- **Do not delete** `README.md`, `GOALS.md`, `codex/DELEGATION.md`, or
+  project-specific agent rules. They have distinct readers and authority.
+- No second OpenCode model guide is needed in this repository. Changing a
+  real host's default model requires a separate host-configuration change.
+
+Official references: [OpenCode CLI](https://opencode.ai/docs/cli/),
+[Models and variants](https://opencode.ai/docs/models/),
+[Configuration](https://opencode.ai/docs/config/), and
+[OpenCode Go catalog](https://opencode.ai/docs/go/).
 
 ## Launch contract and output
 
