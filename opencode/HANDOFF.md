@@ -21,6 +21,17 @@ We must try to use version two.
    [WORKERS.md](WORKERS.md). Session and API details are in
    [SESSION-API.md](SESSION-API.md).
 
+## Optional collaboration: Claude Code / Codex with OpenCode
+
+Claude Code or OpenAI Codex is the primary coding agent chosen by the owner. OpenCode is **optional**: the primary agent decides whether a task benefits from delegation or independent advice. Ordinary work proceeds without involving OpenCode. A link to this guide is enough to explain the available protocol, but it is not an instruction to start an OpenCode session.
+
+When selected, there are two distinct modes:
+
+1. **Delegated doer:** The primary agent assigns a bounded task to OpenCode and releases overlapping write ownership for that task. OpenCode owns its assigned branch/task, implementation, validation, PR and eligible merge under the owning repository's authority. The primary agent must not write concurrently in that scope.
+2. **Read-only adviser:** The primary agent retains implementation ownership. OpenCode may inspect evidence, reason with a selected model (potentially a stronger, non-Flash model if actually available and permitted), and return recommendations. It does not mutate files, run state-changing jobs, or approve/merge. No specific stronger model is guaranteed by this guide.
+
+Both roles are optional and selected per task by Claude Code or Codex; do not launch a helper automatically. Use same-host OpenCode session discovery and message/readback when available, and GitHub Issue/PR handoff for durable cross-host coordination. A cross-host GitHub comment is not itself a session wake-up. Resume the **existing identified** OpenCode session only after confirming its original owner, cwd, and task; API access does not transfer write authority or let another agent impersonate its model execution. Reconcile queued work and side effects before retrying. The owner retains material approvals and the primary agent can decline to delegate.
+
 ## Roles
 
 - **Doer:** one writer. It owns the branch, runs the commands, opens the PR,
