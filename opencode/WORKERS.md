@@ -3,12 +3,17 @@ type: Playbook
 title: OpenCode Quick Start, Model Selection and Worker Recovery
 status: candidate
 confidence: medium
-scope: OpenCode Go model selection, headless sessions, JSONL, liveness and artifact acceptance
+scope: OpenCode V2 model selection, headless sessions, JSONL, liveness and artifact acceptance
 review_after: 2027-01-28
-tags: [opencode, workers, jsonl, sessions, recovery]
+tags: [opencode, opencode-v2, workers, jsonl, sessions, recovery]
 ---
 
 # OpenCode: Models, CLI and Worker Recovery
+
+> **Use OpenCode V2 only.** This guide was verified on `opencode v2.2.0` on
+> 4 Nov 2026. V1 commands, V1 `/docs/...` pages, `--variant`, and the old
+> `--attach` form are legacy. If `opencode --version` is not v2.x, upgrade
+> before following this guide.
 
 The owning project selects provider/model, permissions, execution directory and
 task authority. Neither `--auto` nor a model name grants broader access.
@@ -25,9 +30,9 @@ with the installed OpenCode version and the active OpenCode Go account.
 
 ```bash
 opencode --version
-opencode auth list                 # provider names only; never publish credentials
-opencode models opencode-go        # confirm actual model IDs and availability
-opencode                            # starts the terminal UI
+opencode auth list                 # providers and method names; never publish credentials
+opencode models | grep '^opencode-go/'   # confirm the actual model IDs
+opencode                            # starts the terminal UI; use /models
 ```
 
 In the terminal UI use `/connect` to authenticate **OpenCode Go**, then
@@ -35,7 +40,40 @@ In the terminal UI use `/connect` to authenticate **OpenCode Go**, then
 file, shell command, issue, or captured terminal log. OpenCode Go lists
 DeepSeek V4.1 Flash and GLM-5.3-Flash in its current official model catalog.
 The provider/model identifiers below are **proposed examples**; confirm the
-exact output of `opencode models opencode-go` before storing them.
+exact output of `opencode models` before storing them.
+
+### Headless login (device code)
+
+`/connect` is TUI-only. On a headless VM use the Console device flow:
+
+```bash
+opencode auth login opencode --method device
+```
+
+It prints a one-time code and a URL shaped like:
+
+```text
+Enter code: XXXX-XXXX
+https://opencode.ai/console/device?user_code=XXXX-XXXX&client_id=opencode-cli
+```
+
+Open the URL, sign in to the OpenCode Console account that owns the Go plan,
+and approve. The command ends with `Connected to OpenCode Console`. The code is
+one-time; do not commit it or paste it into a log. On the home host this exact
+flow worked from a headless VM: the VM printed the code and URL, and the
+browser approved it.
+
+To connect the Go provider directly with an API key instead:
+
+```bash
+opencode auth login opencode-go --method key
+```
+
+Paste the key from the Console Go page. The `opencode-go` integration has only
+key/environment methods; `device` belongs to `opencode` (OpenCode Console).
+
+Amit's current plan is **Go at $10/month**. Go Plus ($40/month) and Go Teams
+($20/member/month) have different limits; verify the plan in the Console.
 
 ### Choose the default and reasoning variant
 
@@ -55,20 +93,22 @@ OpenCode reads the root `model` property in `opencode.json` or
 ```
 
 A global preference belongs in the machine's own OpenCode config. A repo-local
-config is only appropriate when that repo has approved that preference. The
-root model selection does **not** pin the reasoning variant.
+config is only appropriate when that repo has approved that preference. In V2
+the `model` value can be a string `provider/model#variant` or an object with a
+`variant` field; omit the suffix when you do not want to pin a variant.
 
 Use explicit arguments for one-off runs:
 
 ```bash
-opencode --model opencode-go/deepseek-v4.1-flash
-opencode run --model opencode-go/deepseek-v4.1-flash --variant high "Summarize this repository; read only."
+opencode run --model 'opencode-go/deepseek-v4.1-flash#high' "Summarize this repository; read only."
+opencode run --model 'opencode-go/glm-5.3-flash#high' "Summarize this repository; read only."
 ```
 
-For a supported installed version, `--model` selects `provider/model` and
-`--variant` requests a model-supported variant. First verify
-`opencode run --help` and an inexpensive read-only response. If `high` is
-unsupported, omit it; do not label the default response 'high' without proof.
+In V2.2.0, `opencode run --model` accepts `provider/model#variant`. There is
+no separate `--variant` flag. First verify `opencode run --help` and an
+inexpensive read-only response. Both DeepSeek V4.1 Flash and GLM-5.3-Flash
+expose `low`, `high`, and `max`; if a model does not expose `high`, omit the
+suffix. Do not label a default response 'high' without proof.
 
 ### Secondary choice: GLM-5.3-Flash
 
@@ -76,9 +116,9 @@ unsupported, omit it; do not label the default response 'high' without proof.
 opencode run --model opencode-go/glm-5.3-flash "Summarize this repository; read only."
 ```
 
-**Fallback is a decision, not an automatic promise.** The documented root
-`small_model` option controls lightweight tasks such as titles; it is **not**
-a guaranteed failover target for the main model. No verified built-in config
+**Fallback is a decision, not an automatic promise.** The legacy `small_model`
+key is **deprecated** in the V2 schema; do not set it. It was never a
+guaranteed failover target for the main model. No verified built-in config
 entry automatically switches a failed DeepSeek task to GLM.
 
 On a provider rate limit, auth failure, unsupported variant, or interrupted
@@ -92,10 +132,32 @@ task already in progress keeps its stated ownership, budget, and permissions.
 | Need | Selection | Guard |
 | --- | --- | --- |
 | Everyday interactive work | DeepSeek V4.1 Flash | Set `model` once in native config |
-| One deeper task | DeepSeek V4.1 Flash + `--variant high` | Verify `high` exists before use |
+| One deeper task | DeepSeek V4.1 Flash + `#high` | Verify `high` exists before use |
 | Provider unavailable | GLM-5.3-Flash | Manual selection after reconciling original session |
-| Lightweight helper work | `small_model` if wanted | Not a primary-model failure fallback |
-| Exact reproducible worker | Explicit `--model`, `--variant`, session, cwd | Verify artifacts; never infer success from exit 0 |
+| Lightweight helper work | No `small_model` in V2 | Deprecated; do not set it |
+| Exact reproducible worker | Explicit `--model provider/model#variant`, session, cwd | Verify artifacts; never infer success from exit 0 |
+
+### Doer and adviser pattern (field note)
+
+In the October 2026 19-lane safe-point work (#596), an OpenCode session was the
+doer and a separate Claude/GLM session was the read-only adviser. The pattern
+that worked:
+
+- **One writer.** The doer owns the branch, runs the commands, opens the PR,
+  and reports evidence. No duplicate worker.
+- **Read-only adviser.** The adviser can flag a wrong assumption, a missing
+  proof, or a cheaper path. It cannot approve, merge, run a job, or change a
+  file.
+- **Durable handoff.** The owning Issue or PR comment is the record. A direct
+  OpenCode message is only a wake; `QUEUED` is not `read`.
+- **Evidence over agreement.** The adviser found that a gate checked the wrong
+  registry and that the per-lane proof did not show the offline assertions.
+  The doer fixed both and re-ran the gate. The adviser did not take over.
+- **Owner scores.** The merge gate is 90% or more. Human-only decisions
+  (credentials, IAM, branch protection, cost) stop the doer.
+
+The adviser is optional. The doer remains fully autonomous inside the approved
+scope and does not wait for an approval message.
 
 ### Which files should remain?
 
@@ -110,25 +172,29 @@ task already in progress keeps its stated ownership, budget, and permissions.
 - No second OpenCode model guide is needed in this repository. Changing a
   real host's default model requires a separate host-configuration change.
 
-Official references: [OpenCode CLI](https://opencode.ai/docs/cli/),
-[Models and variants](https://opencode.ai/docs/models/),
-[Configuration](https://opencode.ai/docs/config/), and
-[OpenCode Go catalog](https://opencode.ai/docs/go/).
+Official references (V2 only): [OpenCode CLI](https://opencode.ai/v2/docs/cli/),
+[Models and variants](https://opencode.ai/v2/docs/models/),
+[Configuration](https://opencode.ai/v2/docs/config/),
+[CLI providers](https://opencode.ai/v2/docs/cli/providers/), and
+[OpenCode Go catalog](https://opencode.ai/v2/docs/console/go/).
 
 ## Launch contract and output
 
 Record the exact cwd/repository/HEAD, allowed tools/files, expected artifacts,
 session identity and completion evidence. Supply prompt **content** and keep
-stdout/stderr separate. The following shape preserves the pinned
-**2026-07, OpenCode 1.18.3-era** workflow; flags must be checked against the
-installed version before use:
+stdout/stderr separate. The following shape is for OpenCode V2 (checked on
+v2.2.0); run `opencode run --help` on the installed version before use:
 
 ```bash
 prompt_text=$(cat "$reviewed_prompt_file")
-opencode run --dir "$approved_repo" --model "$approved_provider_model" \
-  --format json "$prompt_text" \
-  > "$private_jsonl_file" 2> "$private_stderr_file"
+( cd "$approved_repo" && opencode run \
+    --model "$approved_provider_model" \
+    --format json "$prompt_text" \
+    > "$private_jsonl_file" 2> "$private_stderr_file" )
 ```
+
+In V2, `--model` accepts `provider/model#variant`. There is no `--dir` flag in
+`opencode run` v2.2.0; change directory explicitly.
 
 No default model, effort variant or blanket permission override is implied.
 Do not put secrets in command-line prompts. The source's fixed staged timing
@@ -230,18 +296,16 @@ universal worker count.
 
 A headless server, a client attaching to it, and ACP over stdio are different
 interfaces. A running local listener proves neither a usable session nor a
-successful model reply. Bind any authorized server to the approved local-only
-interface; do not expose it externally for convenience.
+successful model reply.
 
-The source observed a no-reply `--attach` path on version 1.17.13 and explored
-HTTP configuration/session endpoints. Treat that as dated failure evidence,
-not a current API guarantee or a reason to start a service. Consult current
-CLI/server/ACP documentation for the selected interface. Do not import the
-source's local ports, auth configuration or service setup.
+For V2, use `opencode service status`, `opencode api get /api/info`, and the
+documented `--server` or `--standalone` options. Do not use the V1 `--attach`
+form or old manually configured ports. Bind any authorized server to the
+approved local-only interface; do not expose it externally for convenience.
 
 ## Citations
 
-- [Pinned OpenCode procedures and observations](https://github.com/amitkarpe/dotfiles/blob/5685eea054e1fbd4499ea4631e86014654f774d0/config/.config/agent/OPENCODE.md)
-- [OpenCode CLI reference](https://opencode.ai/docs/cli/)
-- [OpenCode server interface](https://opencode.ai/docs/server/)
-- [OpenCode ACP support](https://opencode.ai/docs/acp/)
+- [Legacy dotfiles OpenCode contract - deletion candidate](https://github.com/amitkarpe/dotfiles/blob/5685eea054e1fbd4499ea4631e86014654f774d0/config/.config/agent/OPENCODE.md)
+- [OpenCode V2 CLI reference](https://opencode.ai/v2/docs/cli/)
+- [OpenCode V2 API reference](https://opencode.ai/v2/docs/api/)
+- [OpenCode V2 ACP support](https://opencode.ai/v2/docs/cli/acp/)
