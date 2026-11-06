@@ -17,6 +17,10 @@ enabled or explicitly requested by the owner. An Issue is an intake item,
 **not** a Codex code-review event. Keep portable Git operations and GitLab
 workflows in [GIT.md](GIT.md).
 
+## Shared GitHub API quota
+
+**Shared GitHub API quota:** Reuse/collapse redundant GraphQL lookups, bound filtered results, and avoid duplicate polling/watchers across agents using the same identity; when rate-limited, record the provider's actual reset or `Retry-After` and pause affected calls rather than retrying repeatedly.
+
 ## Before an authorized merge
 
 1. Publish a **ready-for-review** PR when the changes are actually ready.
@@ -65,3 +69,7 @@ The GitHub-native summary and inline comments are the durable result.
 Do not add another workflow, timer service, status file or review bot just
 to implement this convention unless an actual missed-review pattern needs
 mechanical enforcement.
+
+## Citations
+
+- [GitHub GraphQL API rate limits](https://docs.github.com/en/graphql/overview/rate-limits-and-query-limits-for-the-graphql-api)
