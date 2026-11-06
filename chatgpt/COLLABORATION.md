@@ -145,16 +145,15 @@ standalone request may need a new record.
 
 ## Feedback identity and review template
 
-Begin every review, feedback, decision, and handoff comment with a visible
-inline-code identity header. State four things explicitly: the actor shorthand
-(`G`, `X`, `Q`, `AA`, or the actual agent name), the agent/tool producing the
-comment, the repository the commenter represents, and the role in this review.
+Begin every review, feedback, decision, and handoff comment with the identity
+header defined in [IDENTITY.md](../IDENTITY.md) (full header for new items and
+handoffs, short header for routine replies). Do not define another format here.
 Replies use the responder's own identity, never the sender's. Do not guess old
 comment authors, models, or session IDs. Identity is attribution, not approval;
 use a public-safe repository alias when necessary.
 
 ```markdown
-`<Identity: ACTOR | Agent: AGENT_OR_TOOL | Repo: OWNER/REPO | Role: ROLE>`
+`<Identity: ACTOR | Agent: AGENT | Surface: SURFACE | Host: HOST | Execution: EXEC | Repo: OWNER/REPO | Role: ROLE>`
 Target: OWNER/REPO#NUMBER @ FULL_HEAD_SHA (SHA when reviewing a PR)
 Verdict: ACCEPT | REVISE | NO-GO
 Findings: <material issue, evidence and smallest correction; or none>
