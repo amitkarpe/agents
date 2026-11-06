@@ -39,11 +39,5 @@ agent tool recipes](tools/RECIPES.md).
 For browser proof, use the [browser E2E and screenshot
 playbook](tools/BROWSER.md).
 
-**Shared API rate limits:** For GitHub GraphQL and similar shared quotas, reuse results and filter/batch reads instead of duplicate lookups, polling or overlapping watchers; when limited, record the provider's reset/Retry-After and pause affected calls until then—never loop retries or duplicate jobs.
-
 Provider-specific tools and host bootstrap belong in their local adapters, not
 this public inventory.
-
-## Citations
-
-- [GitHub GraphQL API rate limits, reset headers and retry behavior](https://docs.github.com/en/graphql/overview/rate-limits-and-query-limits-for-the-graphql-api)
