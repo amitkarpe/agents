@@ -38,6 +38,5 @@ search](tools/RECIPES.md) and [practical
 agent tool recipes](tools/RECIPES.md).
 For browser proof, use the [browser E2E and screenshot
 playbook](tools/BROWSER.md).
-
 Provider-specific tools and host bootstrap belong in their local adapters, not
 this public inventory.
