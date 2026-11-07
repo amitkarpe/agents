@@ -16,44 +16,26 @@ The owner gives an intent in a few words. The coordinator does the discovery
 and brings a plan. The owner approves by clicking options, not by typing
 instructions. Then threads execute under [AUTONOMY](AUTONOMY.md).
 
-## Flow
+## Where the lifecycle lives
 
-| Step | Who | Output |
-|---|---|---|
-| 1. Intent | owner | one sentence: the outcome wanted |
-| 2. Discover | coordinator | inventory, owners, constraints, what already exists, feasibility checks run for real |
-| 3. Plan | coordinator | the one-page plan below |
-| 4. Confirm | owner | click cards for each open choice, one question per card |
-| 5. Execute | threads | one writer per goal; proof per step; stop only at real limits |
-| 6. Close | thread, coordinator | docs updated, learnings saved, thread resolved |
+The lifecycle (Intent, Spec, Plan, Code, Tests, Review, Deploy, Observe) is in
+[repo-starter AI_NATIVE_SDLC.md](https://github.com/amitkarpe/repo-starter/blob/main/AI_NATIVE_SDLC.md).
+This page only adds what the coordinator does around it.
 
-## One-page plan (plus inventory)
+## Coordinator duties
 
-1. **Goal** and what "done" proves (one command or result).
-2. **Scope**: in, out, and the environment or account it is bound to.
-3. **Facts found**: measured, not guessed (for example, size a host by measuring peak use).
-4. **Inventory**: table of existing resources, owner, and how each is rebuilt.
-5. **Risks and stops**: production, destructive actions, missing credentials.
-6. **Steps**, each with its own proof.
-7. **Choices for the owner**: only what changes the goal, each as a click card with a recommendation.
-
-## Rules learned
-
-- Do discovery before asking. Ask only what facts cannot answer.
-- Work already in the approved plan needs no new "go".
-- Infrastructure goes in code with remote, locked state from day one.
-- Prove each lane end to end; theory review finds fewer bugs than one real run.
-- A time promise needs a timer set in the same turn (see below); otherwise say you cannot wake yourself.
+1. Take the owner's intent in a few words.
+2. Run discovery before asking questions. Ask only what facts cannot answer.
+3. Bring one page: goal and proof, scope and bound environment, measured facts,
+   an inventory table (resource, owner, rebuild), risks and stops, steps with a
+   proof each, and the choices only the owner can make.
+4. Ask each choice as one click card with a recommendation.
+5. After approval, hand one writer per goal to a thread under [AUTONOMY](AUTONOMY.md).
+6. At close, update docs and save the learnings.
 
 ## Timers
 
 A promise in text does not wake an agent. Set a timer in the same turn and
-state the time. Where the agent has no timer tool, say so and do not promise.
-The coordinator may have no timer: a thread sets it and messages the
-coordinator. Timers can fire several minutes late; do not rely on exact timing.
-
-## Starter-repo checklist (what a new project should have)
-
-Must: AGENTS.md with the account and authority binding; SPEC (what) and POLICY (who may do what) split; a bootstrap runbook listing each part, owner and rebuild step; remote Terraform state.
-Should: an intake template (the plan above); a definition of done; a cold-start test by a fresh agent.
-Nice: a list of which decisions need an owner click.
+state the time; if there is no timer tool, say so and do not promise. The
+coordinator may have no timer: a thread sets it and messages the coordinator.
+Timers can fire a few minutes late; that is fine.
