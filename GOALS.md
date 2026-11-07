@@ -107,7 +107,8 @@ survive process/session loss by assumption. Recovery must reconcile the saved
 identity and artifacts before resuming or replacing work. For a meaningful
 cross-session handoff or long job, keep in the owning Issue the next actor,
 checkpoint time/condition, readback/evidence link and verified wake method
-(or human fallback); GitHub comments alone do not wake disconnected agents.
+(or human fallback). A GitHub comment alone is not proof that another agent
+woke or resumed; verify the selected delivery path.
 
 ## Delegation
 
@@ -191,3 +192,5 @@ validation and operational ownership.
 
 - [V2 #15 observed checks and unresolved trigger effects](https://github.com/amitkarpe/ami-factory-v2/issues/15#issuecomment-6399777193)
 - [Pinned long-running-work distinction](https://github.com/amitkarpe/dotfiles/blob/5685eea054e1fbd4499ea4631e86014654f774d0/config/.config/agent/LOOP.md)
+- [MacBook and Claude cloud session handoff/wake observations](https://github.com/amitkarpe/agents/issues/95#issuecomment-6702114928)
+- [Nextflow cloud and Mac session handoff record](https://github.com/amitkarpe/nextflow-offline/issues/687)
