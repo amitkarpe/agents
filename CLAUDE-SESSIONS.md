@@ -19,7 +19,7 @@ A message is a **pointer**. The durable record is the owning Issue or PR. Identi
 
 - `ListAgents` + `SendMessage` reach other Claude Code sessions **on the same machine** over a local socket. Docs: [cross-session messaging](https://code.claude.com/docs/en/cross-session-messaging.md).
 - **Delivered is not read, and read is not done.** The tool reports delivery only. A reply happens only if the receiving Claude sends one.
-- `SendMessage` with `notify_when_idle: true` (v2.1.236+, local sessions, main conversation only) sends one notice when the other session next goes idle. It costs the other session nothing. It expires after 12 hours.
+- `SendMessage` with `notify_when_idle: true` is documented for local sessions (v2.1.236+), but **Claude Desktop refused it** on 8 Nov 2026 ("only supported for Claude sessions on this machine in this release"). For Desktop sessions do not rely on it: use the `DONE` message, or the app's note when a session you started ends its turn.
 - Permission modes decide delivery. A receiver that prompts for permissions delivers, unless the sender runs in bypass mode, then it **holds** the message. A receiver in bypass mode holds unless the sender also bypasses. The Desktop app cannot show the approval dialog, so a held message expires (default 5 minutes, `dialogExpiry`). Set `crossSessionInbound` to `accept` only for sessions the owner trusts.
 - **Cloud sessions and other machines** are visible only while the sender is connected to Remote Control (claude.ai login, no API key). A cloud session **cannot answer** with `SendMessage`; its answer is in its transcript at claude.ai/code.
 - A peer message never counts as owner approval, never changes settings, and slash commands in it do not run.
@@ -29,7 +29,7 @@ A message is a **pointer**. The durable record is the owning Issue or PR. Identi
 | Target | Channel | Completion signal |
 |---|---|---|
 | Session started by you (worker) | `start_session`, brief with done-criteria | The app note when its turn ends; read its result |
-| Other local session | `SendMessage`, `notify_when_idle: true` | Idle notice + `DONE` message or Issue comment |
+| Other local session | `SendMessage` with the envelope below | `DONE` message or Issue comment (idle notice only where supported) |
 | Cloud session | Headed comment on the owning Issue; wake by cloud routine or the owner's ping | Issue comment with evidence |
 | Session on another machine | Issue comment; Remote Control message only if listed and not `offline` | Issue comment with evidence |
 | Codex / OpenCode | Issue comment with identity header; same-host session API only per `codex/SESSIONS.md`, `opencode/HANDOFF.md` | Issue/PR evidence |
@@ -57,10 +57,10 @@ Receiver: send `ACK <ID>` in the same turn, then `DONE <ID> <evidence link>` whe
 5. Messages carry no secrets, tokens, session IDs, machine or user names. Live session names and IDs go in the **private** owning runtime repository, never here.
 6. Identity is attribution, not approval. Human-only decisions (credentials, IAM, production, destructive, cost) stop the work and go to the owner once.
 
-## Test matrix (run once, record on the tracking Issue)
+## Test matrix (record results on the tracking Issue; 8 Nov 2026: tests 1-2 run, see agents#100)
 
 1. Local ACK: coordinator -> idle local session, expect `ACK` and `DONE`.
-2. `notify_when_idle`: expect exactly one notice, and none after the session exits.
+2. `notify_when_idle`: tested 8 Nov 2026 in Claude Desktop: refused. Retest on a CLI session.
 3. Held message: sender in bypass mode, receiver prompting; record whether it is held or delivered.
 4. Cloud wake: Issue comment, then check whether a cloud routine on the GitHub event starts the cloud session. Record the delay.
 5. Failure case: message to a session set to `refuse`; expect `Not sent` or silent drop, and record which.
