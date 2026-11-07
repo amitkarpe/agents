@@ -32,7 +32,7 @@ Evidence: <link to the Issue, PR, run or log; omit when there is none>
 
 | Field | Meaning | Values |
 |---|---|---|
-| ACTOR | Your shorthand in this repository | `G`, `X`, `Q`, `AA`, `HHC`, `MBC`, or your agent name |
+| ACTOR | Your shorthand in this repository | `G`, `X`, `DD`, `Q`, `AA`, `HHC`, `MBC`, or your agent name |
 | AGENT | Provider and product that writes the text | `Claude Code`, `Codex`, `ChatGPT`, `Kiro` |
 | SURFACE | The product surface | `CLI`, `web`, `desktop`, `cloud task` |
 | HOST | The kind of machine | `Mac`, `Windows`, `Linux`, `cloud`, `unknown` |
