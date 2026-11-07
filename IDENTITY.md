@@ -49,6 +49,27 @@ Examples:
 
 An older header with the first four fields stays valid. Add `Surface`, `Host` and `Execution` when you can state them as facts.
 
+## Known actor purposes
+
+These are durable **responsibilities**, not proof that a named session is
+running, connected or authorized. A project's current Issue/Spec and actual
+session binding decide who can act.
+
+| Alias | Agent | Owning repository / area | Purpose | Authority boundary |
+| --- | --- | --- | --- | --- |
+| **G** | ChatGPT | Portfolio coordination; Agent OS (`amitkarpe/agents`) | Synthesize intent, coordinate/review, curate reusable knowledge | No implicit code, merge, cloud or host authority; follow each owning project's approval |
+| **X** | Codex when assigned as coding worker | The **current task's** repository | Implement, test and report bounded work | Only the authorized Issue/Spec/instruction and current repository rules; not every Codex session |
+| **DD** ("Didi" / `dd`) | Codex | `amitkarpe/dotfiles` (owner-managed) | Maintain OS files, developer setup, configuration/settings, installers, backup and recovery | Host/config/secret mutations require dotfiles authority and safeguards; identity alone grants none |
+
+`HHC` (Home Claude) and `MBC` (MacBook Claude) are observed Claude Code
+**session labels**, not permanent portfolio roles or fixed repository owners.
+For them and any `Q`, `AA` or new alias, use the actual current task's
+identity header; do not invent a lasting purpose, host or authority.
+
+Keep this table small. Add an enduring alias only after the owner confirms its
+purpose and owning area. Store live thread IDs, host paths, availability and
+permission details in the **private owning runtime**, never here.
+
 ## Ask in another repository
 
 Right after the full header, write four lines:
