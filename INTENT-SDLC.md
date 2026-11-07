@@ -2,7 +2,7 @@
 type: Policy
 title: Intent-Based SDLC for the Coordinator
 description: The coordinator turns the owner's intent into a researched one-page plan, gets one click-approval, then threads execute alone.
-status: draft
+status: candidate
 scope: Reusable public-safe coordinator playbook; does not grant cloud, production or credential authority
 confidence: medium
 timestamp: 2026-11-07T11:30:00+08:00
