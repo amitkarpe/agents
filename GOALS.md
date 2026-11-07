@@ -31,9 +31,10 @@ unrelated work and stop on conflicting ownership or target identity.
 
 For a **new project**, use its initialization and intent gate (for example,
 `repo-starter/INIT.md`); iterate on feasibility, discovery and review until
-material choices are clear. For a **new Goal in an existing repository**, start
-from the owning Issue and scale preflight to risk. Tiny known fixes need no
-formal two-phase ceremony. A coordinator is a role, not a required product or
+material choices are clear. For a **new Goal in an initialized repository**, start
+from the owning Issue and scale preflight to risk; incomplete initialization
+still follows the project intent gate. Tiny known fixes need no formal
+two-phase ceremony. A coordinator is a role, not a required product or
 extra agent.
 
 Before asking, check recorded owner decisions and present-day facts. Research
