@@ -32,8 +32,8 @@ unrelated work and stop on conflicting ownership or target identity.
 For a **new project**, use its initialization and intent gate (for example,
 `repo-starter/INIT.md`); iterate on feasibility, discovery and review until
 material choices are clear. For a **new Goal in an initialized repository**, start
-from the owning Issue and scale preflight to risk; incomplete initialization
-still follows the project intent gate. Tiny known fixes need no formal
+from the existing owning Issue/PR or goal record and scale preflight to risk;
+incomplete initialization still follows the project intent gate. Tiny known fixes need no formal
 two-phase ceremony. A coordinator is a role, not a required product or
 extra agent.
 
@@ -42,8 +42,8 @@ checks outside technology and vendor claims; Discovery checks actual code,
 runtime, access and infrastructure. Challenge assumptions that change the
 outcome, including whether the work is needed. Use recommended clickable
 choices where supported, otherwise ask one concise question. A chat/card
-answer is a real decision within its scope: record it promptly in the owning
-Issue/Spec, reconcile earlier choices and mark stale options superseded; do not
+answer is a real decision within its scope: record it promptly in the existing owning
+Issue/PR, Spec or goal record; reconcile earlier choices and mark stale options superseded; do not
 ask for the same approval again.
 
 ## KISS-FIRST decisions
@@ -105,8 +105,8 @@ running, stalled, interrupted and terminal states; silence alone proves none
 of them. A delayed one-shot command is not a durable watcher and does not
 survive process/session loss by assumption. Recovery must reconcile the saved
 identity and artifacts before resuming or replacing work. For a meaningful
-cross-session handoff or long job, keep in the owning Issue the next actor,
-checkpoint time/condition, readback/evidence link and verified wake method
+cross-session handoff or long job, keep in the existing owning Issue/PR or
+project record the next actor, checkpoint time/condition, readback/evidence link and verified wake method
 (or human fallback). A GitHub comment alone is not proof that another agent
 woke or resumed; verify the selected delivery path.
 
@@ -140,7 +140,8 @@ Record merge authority from the active Issue/Spec, adopted repository rules or
 explicit owner instruction; agent memory, green CI or a clickable card alone
 does not grant broader rights. Finish the approved work, validate the actual
 end-to-end acceptance result, and record its PASS/FAIL/UNVERIFIED outcome with
-relevant revision, run/job IDs and provider readback in the owning Issue.
+relevant revision, run/job IDs and provider readback in the existing
+owning Issue/PR or result record.
 A merged PR is not a completed deployment, working board or successful job.
 Do not claim DONE until the named outcome is proven. Reconcile
 the final repository or external state when the goal changed it. Cleanup is a
