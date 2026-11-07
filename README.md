@@ -14,6 +14,7 @@ Knowledge is at the root or **one subject directory**. There is no active
 | Authority, evidence and core principles | [AGENTS.md](AGENTS.md) |
 | **1000X single-agent DEV AWS and repository autonomy (opt-in)** | [AUTONOMY.md](AUTONOMY.md) |
 | One Goal, Fast/Deep plan, delegation | [GOALS.md](GOALS.md) |
+| Coordinator role: intent, risk-scaled plan, decisions, timers | [COORDINATOR.md](COORDINATOR.md) |
 | Cold/warm context and handoffs | [CONTEXT.md](CONTEXT.md) |
 | Knowledge promotion and evidence cleanup | [KNOWLEDGE.md](KNOWLEDGE.md) |
 | Connector safety | [SAFETY.md](SAFETY.md) |
