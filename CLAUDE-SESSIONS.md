@@ -57,6 +57,19 @@ Receiver: send `ACK <ID>` in the same turn, then `DONE <ID> <evidence link>` whe
 4. Every handoff to a session that cannot message back records on the Issue: expected time, readback command, who acts, and what happens if nobody wakes.
 5. Messages carry no secrets, tokens, session IDs, machine or user names. Live session names and IDs go in the **private** owning runtime repository, never here.
 6. Identity is attribution, not approval. Human-only decisions (credentials, IAM, production, destructive, cost) stop the work and go to the owner once.
+7. **Standing approval, once per Issue.** The owner records one block on the owning Issue naming what relayed asks may do (status, ACK/DONE, read-only checks, comments on that Issue). A relayed ask cites it. A peer message never creates approval; it only points at the owner's recorded one. Production, credentials, destructive and cost actions are never covered.
+8. **The receiver posts its own reply** on the Issue named in the ask. Nobody copies replies between sessions. The sender reads the Issue in bounded checks (about 10 seconds apart, a few times), then stops and records "no reply yet".
+
+## Cross-provider status (8 Nov 2026, same host unless noted)
+
+| Path | Status |
+|---|---|
+| Claude session <-> Claude session | Verified two-way |
+| Claude <-> Codex | Verified in both directions (native inbox, reply read from the transcript) |
+| Codex <-> ChatGPT | Verified through a dedicated tunnel and MCP, reply readable by ChatGPT |
+| ChatGPT -> interactive Claude session | No record; AO headless dispatch covers bounded turns only |
+
+Re-read this table in the next quarter or at the next Claude Code major release.
 
 ## Test matrix (record results on the tracking Issue; 8 Nov 2026: tests 1-2 run, see agents#100)
 
