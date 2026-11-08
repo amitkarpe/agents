@@ -6,7 +6,7 @@ status: candidate
 scope: All repositories where more than one Claude Code session works
 confidence: medium
 timestamp: 2026-11-08T00:00:00+08:00
-review_after: 2027-05-08
+review_after: 2027-02-08
 tags: [claude-code, sessions, messaging, handoff, coordination]
 ---
 
@@ -30,12 +30,12 @@ A message is a **pointer**. The durable record is the owning Issue or PR. Identi
 |---|---|---|---|
 | Session started by you (worker) | `start_session`, brief with done-criteria | The app note when its turn ends | Parent sees the note; none if the app is closed |
 | Other local session | `@name` or `SendMessage` with the envelope below | `DONE` message or Issue comment | Not listed means closed: open it in the app. Address by name; IDs change on restart |
-| Cloud session | `SendMessage` (needs Remote Control), or a headed Issue comment | Its transcript or an Issue comment | Cannot reply by message. May act on a peer message only after owner approval |
-| Project coordinator (cloud project chat) | Message a Remote Control bridge session on the Mac and ask it to reply in its thread | The project chat (not GitHub) | Woken by a thread reply. The bridge parks when the Mac sleeps: keep it awake or expect a delay |
+| Cloud session | `SendMessage` (needs Remote Control), or a headed Issue comment | Its transcript or an Issue comment | Cannot reply by message. May act on a peer message only after owner approval, or when a standing approval (rule 7) covers the ask |
+| Project coordinator (cloud project chat) | Message a Remote Control bridge session on the Mac and ask it to reply in its thread | The project chat (not GitHub) | Woken by a thread reply (reported by the coordinator, observed once on 8 Nov 2026). The bridge parks when the Mac sleeps: keep it awake or expect a delay |
 | Session on another machine | Remote Control message if listed and not `offline` | Its transcript or an Issue comment | `offline` until that machine reconnects |
 | Codex / OpenCode | Issue comment with identity header; same-host session API only per `codex/SESSIONS.md`, `opencode/HANDOFF.md` | Issue/PR evidence | A comment is not a wake-up |
 
-Do not build watchers or daemons to support this. Do not resume another agent's session; two writers corrupt it.
+Do not build standing watchers or daemons to support this; bounded polling inside one turn (rule 8) is fine. Do not resume another agent's session; two writers corrupt it.
 
 ## Message format
 
@@ -57,8 +57,21 @@ Receiver: send `ACK <ID>` in the same turn, then `DONE <ID> <evidence link>` whe
 4. Every handoff to a session that cannot message back records on the Issue: expected time, readback command, who acts, and what happens if nobody wakes.
 5. Messages carry no secrets, tokens, session IDs, machine or user names. Live session names and IDs go in the **private** owning runtime repository, never here.
 6. Identity is attribution, not approval. Human-only decisions (credentials, IAM, production, destructive, cost) stop the work and go to the owner once.
+7. **Standing approval, once per Issue.** The owner records one block on the owning Issue naming what relayed asks may do (status, ACK/DONE, read-only checks, comments on that Issue). A relayed ask cites it. A peer message never creates approval; it only points at the owner's recorded one. Production, credentials, destructive and cost actions are never covered; it does not widen rule 6.
+8. **The receiver posts its own reply** on the Issue named in the ask. Nobody copies replies between sessions. The sender reads the Issue in bounded checks (about 10 seconds apart, a few times), then stops and records "no reply yet".
 
-## Test matrix (record results on the tracking Issue; 8 Nov 2026: tests 1-2 run, see agents#100)
+## Cross-provider status (8 Nov 2026, same host unless noted)
+
+| Path | Status |
+|---|---|
+| Claude session <-> Claude session | Verified two-way |
+| Claude <-> Codex | Verified in both directions (native inbox, reply read from the transcript) |
+| Codex <-> ChatGPT | Verified through a dedicated tunnel and MCP, reply readable by ChatGPT |
+| ChatGPT -> interactive Claude session | No record; AO headless dispatch covers bounded turns only |
+
+Re-read this table in the next quarter or at the next Claude Code major release.
+
+## Test matrix (record results on the tracking Issue; 8 Nov 2026: tests 1-2 run; cloud and coordinator ACK tests C1, C4, C5 passed; see agents#100)
 
 1. Local ACK: coordinator -> idle local session, expect `ACK` and `DONE`.
 2. `notify_when_idle`: tested 8 Nov 2026 in Claude Desktop: refused. Retest on a CLI session.
