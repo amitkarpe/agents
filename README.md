@@ -24,6 +24,7 @@ Knowledge is at the root or **one subject directory**. There is no active
 | Terraform change and drift | [TERRAFORM.md](TERRAFORM.md) |
 | AWS identity, sources, lifecycle and cost | [AWS.md](AWS.md) |
 | Agent identity header (Issues, PRs, handoffs) | [IDENTITY.md](IDENTITY.md) |
+| Claude session messaging, routing and ACK/DONE | [CLAUDE-SESSIONS.md](CLAUDE-SESSIONS.md) |
 | Repository foundation/runtime decisions | [REPOSITORIES.md](REPOSITORIES.md) |
 | Cloudflare demo deployment | [CLOUDFLARE.md](CLOUDFLARE.md) |
 
