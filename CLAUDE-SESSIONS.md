@@ -26,13 +26,14 @@ A message is a **pointer**. The durable record is the owning Issue or PR. Identi
 
 ## Routing: pick the channel by target
 
-| Target | Channel | Completion signal |
-|---|---|---|
-| Session started by you (worker) | `start_session`, brief with done-criteria | The app note when its turn ends; read its result |
-| Other local session | `SendMessage` with the envelope below | `DONE` message or Issue comment (idle notice only where supported) |
-| Cloud session | Headed comment on the owning Issue; wake by cloud routine or the owner's ping | Issue comment with evidence |
-| Session on another machine | Issue comment; Remote Control message only if listed and not `offline` | Issue comment with evidence |
-| Codex / OpenCode | Issue comment with identity header; same-host session API only per `codex/SESSIONS.md`, `opencode/HANDOFF.md` | Issue/PR evidence |
+| Target | Channel | Reply is read from | Wake-up and risk |
+|---|---|---|---|
+| Session started by you (worker) | `start_session`, brief with done-criteria | The app note when its turn ends | Parent sees the note; none if the app is closed |
+| Other local session | `@name` or `SendMessage` with the envelope below | `DONE` message or Issue comment | Not listed means closed: open it in the app. Address by name; IDs change on restart |
+| Cloud session | `SendMessage` (needs Remote Control), or a headed Issue comment | Its transcript or an Issue comment | Cannot reply by message. May act on a peer message only after owner approval |
+| Project coordinator (cloud project chat) | Message a Remote Control bridge session on the Mac and ask it to reply in its thread | The project chat (not GitHub) | Woken by a thread reply. The bridge parks when the Mac sleeps: keep it awake or expect a delay |
+| Session on another machine | Remote Control message if listed and not `offline` | Its transcript or an Issue comment | `offline` until that machine reconnects |
+| Codex / OpenCode | Issue comment with identity header; same-host session API only per `codex/SESSIONS.md`, `opencode/HANDOFF.md` | Issue/PR evidence | A comment is not a wake-up |
 
 Do not build watchers or daemons to support this. Do not resume another agent's session; two writers corrupt it.
 
