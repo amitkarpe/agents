@@ -189,6 +189,32 @@ finished" when the two disagree. After a package update, a second check on the
 node is immediate; the scanner's agreement follows later and should be recorded
 as a separate, later fact.
 
+**When the scanner looks again after a package fix (not CIS).** Measured in one
+lab on Amazon Linux 2023 with SSM-agent-based scanning, 10 Nov 2026:
+
+| After a plain package update | Scanner agreement |
+| --- | --- |
+| Nothing extra | None in 31 minutes; in another run none in 45 minutes |
+| A fresh software inventory (the new version was in SSM Inventory within seconds) | None in 31 minutes |
+| Restart of the SSM agent only | No new scan in 13 minutes |
+| Restart of the instance | New scan about 1.5 minutes later; finding closed |
+| One start of the scanner unit on the node | Finding closed in 81 and 98 seconds |
+
+The cause was on the node: Inspector installs a scanner as a systemd unit with
+a timer that runs at boot and then every three hours (`systemctl list-timers`
+shows it; in that lab the unit was `inspector-vm-scanner.service`). Inventory
+freshness was not the limit. A narrow, read-only Command document that starts
+that unit once after a confirmed fix gives agreement in minutes. Send it once
+per node, skip it when the fix ends with a restart, never loop on it, and keep
+a bounded wait for the finding to close. Unit name and timer are an observed
+implementation detail, not a documented contract: check them on the node first.
+
+The wider lesson: the first design (refresh the inventory) looked right from
+the documentation and was wrong. A 30-minute side-by-side measurement, one
+node with the change and one without, showed it before any code was merged.
+Measure the before state first, then look on the node for what really triggers
+the behaviour.
+
 The source located Linux CIS diagnostics in
 `/var/log/amazon/inspector/scitor.log.*`. Treat this as an installation-specific
 log-location clue; confirm the current package and newest attempt. Logs may

@@ -206,6 +206,20 @@ characters before anything reaches a node (`InvalidParameters`).
   state, so the check can repeat while the change never does.
 - Prove the pattern on one node with the read-only document before the first
   real change, and try one rejected value on purpose.
+- Make a changing document report what it changed: print the versions before
+  and after, and the package manager's own number for the change (on `dnf`:
+  the newest ID in `dnf history list`, read before and after, printed only when
+  it moved). A separate narrow document can then take back exactly that change
+  (`dnf history undo <number>`), with the number as its only, digits-only
+  parameter. Read the versions back after the undo. This held on Amazon Linux
+  2023, where the earlier version was still in the image's locked repository.
+- Run nodes one at a time and stop at the first change that is not confirmed.
+  Prove "the next node was not touched" from the service, by counting the
+  commands of that document sent to it, not from the caller's own log.
+- To test a failure for real, break one node on purpose with a lab-only
+  switch (for example an `excludepkgs` line in `dnf.conf` for one package),
+  run the normal flow, then remove the switch. A faked failure in the caller
+  does not prove the roll-back.
 
 Wait-only, output-only and send-with-explicit-timeout paths should remain
 separate in an existing wrapper. Missing wrappers are a capability gap to
