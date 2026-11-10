@@ -15,7 +15,8 @@ tags: [agents, autonomy, single-writer, dev, aws, no-handoff]
 
 The owner-selected agent decides, implements, tests, fixes, operates and closes
 out work end to end. Its standing authority comes from the adopting project's
-`AGENTS.md`, this policy, and the owner's current instructions. It does **not**
+`POLICY.md` (or `AGENTS.md` until the project is migrated), this policy, and the
+owner's current instructions. It does **not**
 need a new GO, Amit review, G approval or another agent's permission
 for each already-authorized milestone. Where GitHub Codex automatic review is
 enabled, reconcile its findings under [GitHub PR Review](GITHUB.md) before
