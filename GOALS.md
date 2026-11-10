@@ -46,6 +46,16 @@ answer is a real decision within its scope: record it promptly in the existing o
 Issue/PR, Spec or goal record; reconcile earlier choices and mark stale options superseded; do not
 ask for the same approval again.
 
+**Dependency scan.** In Research and Discovery, before any build, list every
+step only the owner or another team can do: an agreement or terms to accept
+(for example an AWS Marketplace model offer), a sign-in or token scope, an
+account-wide setting, an approval, a purchase, or an Ops task. Check Region and
+service availability first (for example with AWS Knowledge MCP). Label the
+owning Issue `needs-amit` or `ops-blocker`, put it on the owner's dashboard, and
+ask the owner while they are present, all questions at once. Never skip or
+silently drop a dependency: an unrecorded one stops the work later, often at
+night.
+
 ## A live GOALS.md in each repo
 
 Each project repository keeps one live `GOALS.md` at its root, so the owner
