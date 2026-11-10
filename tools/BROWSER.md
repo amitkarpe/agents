@@ -7,7 +7,7 @@ scope: local web application development and browser evidence
 confidence: high
 timestamp: 2026-08-27T00:00:00+08:00
 review_after: 2026-11-27
-tags: [browser, e2e, screenshots, testing, automation, wsl]
+tags: [browser, e2e, screenshots, testing, automation, wsl, macos, linux]
 ---
 
 # Agent-Run Browser E2E and Screenshot Evidence
@@ -39,6 +39,19 @@ user-journey test. Record the selected mode in the compact result file.
 
 For WSL applications using installed Windows Node.js and Chrome, follow
 [Run Playwright Core with Windows Node and Chrome from WSL](PLAYWRIGHT.md).
+For a macOS or Linux host that already has Google Chrome, follow
+[Run Playwright with the Installed Chrome on macOS or Linux](PLAYWRIGHT_LOCAL.md).
+
+## Choose the Browser Tool
+
+| Tool | Use it for | Not for |
+| --- | --- | --- |
+| Playwright test in the owning repository | Proof: a repeatable user journey with assertions and screenshots | A one-time look |
+| An assistant's built-in browser pane or browser tool | A quick look during development | Acceptance proof; it leaves no test another agent can run |
+| A browser extension that acts in the owner's signed-in browser | Sites that need the owner's own sign-in, with the owner's permission | Unattended or repeatable testing |
+| Browser developer tools | Debugging one page by hand | Evidence |
+
+A manual look can find a problem. Only the repository-owned test proves the fix.
 
 ## Agent Execution Contract
 
@@ -432,6 +445,17 @@ local E2E proof before treating the automation as trusted.
   process IDs.
 - **Unproven cleanup:** a cleanup command without a post-cleanup check is not a
   pass.
+- **Clean result from a source that is not ready:** a scanner or index on a new
+  resource can answer with a partial list that looks complete. A test that only
+  checks "the page loaded" passes on wrong data. Cross-check a silent source
+  against a second fact (for example the installed version), show "not finished"
+  instead of "nothing to do", and assert the expected items by name.
+- **Readiness gate that measures the wrong thing:** "some rows exist" is not
+  "the rows are complete". Gate on the fact the test depends on.
+- **Test approval recorded as a human approval:** when automation presses an
+  approval control, the server must label the record as a test approval.
+- **Source changed under a running test:** editing files served by a hot-reload
+  dev server, or a shell script that is still running, corrupts the run.
 
 ## Acceptance Checklist
 
