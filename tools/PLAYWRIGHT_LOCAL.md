@@ -41,7 +41,7 @@ export default defineConfig({
   workers: 1,
   use: {
     channel: process.env.E2E_CHANNEL ?? "chrome", // the installed Google Chrome
-    baseURL: "http://127.0.0.1:4400",
+    baseURL: "http://localhost:4400", // loopback only
     screenshot: "only-on-failure",
   },
 });
@@ -142,4 +142,4 @@ create disposable resources -> start services -> wait until ready
 - [Playwright: Browsers and channels](https://playwright.dev/docs/browsers)
 - [Playwright: Test configuration](https://playwright.dev/docs/test-configuration)
 - [Playwright: Locators](https://playwright.dev/docs/locators)
-- [Playwright: Annotations (`test.skip`)](https://playwright.dev/docs/test-annotations)
+- [Playwright: Annotations and test.skip](https://playwright.dev/docs/test-annotations)

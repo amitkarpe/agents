@@ -254,8 +254,8 @@ not proof that Docker/containerd/application health stayed intact.
 
 ## Citations
 
-- [Systems Manager document parameters (`allowedPattern`)](https://docs.aws.amazon.com/systems-manager/latest/userguide/documents-syntax-data-elements-parameters.html)
-- [Go `regexp/syntax` (repetition limit)](https://pkg.go.dev/regexp/syntax)
+- [Systems Manager document parameters and allowedPattern](https://docs.aws.amazon.com/systems-manager/latest/userguide/documents-syntax-data-elements-parameters.html)
+- [Go regexp/syntax repetition limit](https://pkg.go.dev/regexp/syntax)
 
 - [Existing executable Run Command skill](https://github.com/amitkarpe/agent-skills/blob/main/skills/aws-ssm-run-command/SKILL.md)
 - [Pinned source payloads, recovery examples and failure lessons](https://github.com/amitkarpe/dotfiles/blob/5685eea054e1fbd4499ea4631e86014654f774d0/config/.config/agent/ssm.md)
