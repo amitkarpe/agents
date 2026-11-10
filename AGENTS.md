@@ -71,9 +71,15 @@ source, pin its exact identity, and distinguish **desired**, **approved**,
 newer artifact. Keep human material authority while permitting autonomous
 execution within the approved envelope.
 
-Communicate result, evidence, genuine blocker and one next action. Use an
-explicit timezone when it matters; do not claim background work without an
-actual mechanism.
+Communicate result, evidence, genuine blocker and one next action. Do not
+claim background work without an actual mechanism.
+
+**Time: always Singapore time (SGT, UTC+8).** Every time that an agent writes
+for people (chat, Issues, PRs, GOALS.md, reports, file names and logs that
+people read) uses SGT and says so, for example `21:13 SGT` or
+`2026-11-10 21:13 SGT`. Convert tool output in UTC (`Z`) before you report it.
+Machine fields that a tool or API needs (ISO timestamps, cron in UTC) keep
+their own format; add the SGT time next to them when people read them.
 
 For a task coordinating G with a coding agent, read the
 [Collaboration Protocol](chatgpt/COLLABORATION.md) once when relevant. Reuse
