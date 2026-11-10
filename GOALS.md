@@ -46,6 +46,22 @@ answer is a real decision within its scope: record it promptly in the existing o
 Issue/PR, Spec or goal record; reconcile earlier choices and mark stale options superseded; do not
 ask for the same approval again.
 
+## A live GOALS.md in each repo
+
+Each project repository keeps one live `GOALS.md` at its root, so the owner
+reads one page to know where the work stands. The agent keeps it current at
+each milestone:
+
+| Section | Content |
+|---|---|
+| Goal | The current approved goal, in one or two lines, with a link to its Issue |
+| Plan | The phases, each marked done, active or next |
+| Questions for the owner | Open decisions, each asked as one clear question |
+| Progress | Merged PRs and proof, newest first; older detail moves to Git history |
+
+`GOALS.md` records the goal; it does not grant authority. Authority stays in
+the project's `POLICY.md` and the owner's words.
+
 ## KISS-FIRST decisions
 
 Choose the smallest useful outcome. Scale investigation to the next action's
