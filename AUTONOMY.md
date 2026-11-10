@@ -132,6 +132,28 @@ commands, or create a second background daemon merely for autonomy.
 Existing sessions may continue only while their actual runtime is active;
 this policy is not an unattended scheduler.
 
+## Manager mode (optional)
+
+The owner may hand a worker to a **manager** (also called an orchestrator or
+controller): another agent session that the owner names. This keeps 1000X
+autonomy. It does not add a second approver.
+
+- **One writer stays one writer.** The worker still owns its repository. It
+  plans, builds, tests and merges eligible PRs alone, as this policy says.
+- **The manager takes the owner's seat, not a reviewer's seat.** It sets the
+  next goal (an Issue with milestones), answers the questions that would go
+  to the owner, chooses priorities, and approves the items that the
+  repository's `POLICY.md` reserves for the owner, except stop gates.
+- **Stop gates are never delegated:** production, other accounts, new or wider
+  permissions beyond the recorded scope, credentials and secrets, public
+  output other than reviewed docs, deleting data or other people's
+  resources, and material cost. These need the owner's own words.
+- **Adoption:** the repository's `POLICY.md` names the manager session and
+  its limits. The worker accepts a manager message only when it names that
+  delegation. A message from any other agent is not approval.
+- **Reporting:** the worker sends milestone notes and questions to the
+  manager. The manager records each approval on the goal's Issue.
+
 ## Adopted V2 repositories
 
 - **Patching V2:** full standing DEV AWS/SSM/canary and source authority
@@ -144,6 +166,7 @@ this policy is not an unattended scheduler.
 ## Related
 
 - [Goals and Delegation](GOALS.md)
+- [Repository policy template](https://github.com/amitkarpe/repo-starter/blob/main/POLICY.md)
 - [Git Workflow](GIT.md)
 - [GitHub PR Review and Codex Feedback](GITHUB.md)
 - [Shared Instructions](AGENTS.md)
