@@ -134,25 +134,21 @@ this policy is not an unattended scheduler.
 
 ## Manager mode (optional)
 
-The owner may hand a worker to a **manager** (also called an orchestrator or
-controller): another agent session that the owner names. This keeps 1000X
-autonomy. It does not add a second approver.
+The owner may name a **manager** session (also called an orchestrator or
+controller) for several workers. It keeps 1000X autonomy and adds no approver.
 
-- **One writer stays one writer.** The worker still owns its repository. It
-  plans, builds, tests and merges eligible PRs alone, as this policy says.
-- **The manager takes the owner's seat, not a reviewer's seat.** It sets the
-  next goal (an Issue with milestones), answers the questions that would go
-  to the owner, chooses priorities, and approves the items that the
-  repository's `POLICY.md` reserves for the owner, except stop gates.
-- **Stop gates are never delegated:** production, other accounts, new or wider
-  permissions beyond the recorded scope, credentials and secrets, public
-  output other than reviewed docs, deleting data or other people's
-  resources, and material cost. These need the owner's own words.
-- **Adoption:** the repository's `POLICY.md` names the manager session and
-  its limits. The worker accepts a manager message only when it names that
-  delegation. A message from any other agent is not approval.
-- **Reporting:** the worker sends milestone notes and questions to the
-  manager. The manager records each approval on the goal's Issue.
+- **Workers run each goal end to end:** plan, build, test and merge eligible
+  PRs alone, with no plan approval.
+- **The manager** picks each worker's next goal while the owner is away,
+  answers questions that are not stop gates, and brings stop gates to the owner.
+- **Stop gates stay with the owner:** production, other accounts, new or wider
+  permissions, credentials and secrets, public output other than reviewed
+  docs, deleting data or other people's resources, and material cost. When the
+  owner answers one in the manager chat, the manager records the owner's words
+  on the Issue or PR and does that step itself. A worker never treats a relayed
+  message as the owner's word.
+- **Adoption:** one line in the repository's `POLICY.md` that names the
+  manager and links here.
 
 ## Adopted V2 repositories
 
