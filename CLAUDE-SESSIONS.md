@@ -59,6 +59,7 @@ Receiver: send `ACK <ID>` in the same turn, then `DONE <ID> <evidence link>` whe
 6. Identity is attribution, not approval. Human-only decisions (credentials, IAM, production, destructive, cost) stop the work and go to the owner once.
 7. **Standing approval, once per Issue.** The owner records one block on the owning Issue naming what relayed asks may do (status, ACK/DONE, read-only checks, comments on that Issue). A relayed ask cites it. A peer message never creates approval; it only points at the owner's recorded one. Production, credentials, destructive and cost actions are never covered; it does not widen rule 6.
 8. **The receiver posts its own reply** on the Issue named in the ask. Nobody copies replies between sessions. The sender reads the Issue in bounded checks (about 10 seconds apart, a few times), then stops and records "no reply yet".
+9. **A worker keeps a long wait inside one turn.** Every turn end wakes the session that started the worker. For a long run (a lab test, a measurement), start it in the background and wait with a bounded foreground loop (a few minutes per call, a fixed upper limit), instead of ending the turn at each step. Report on a failure or at the end; routine progress goes to the run log.
 
 ## Cross-provider status (8 Nov 2026, same host unless noted)
 

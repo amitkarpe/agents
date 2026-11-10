@@ -80,6 +80,18 @@ project's permission. The installed-Chrome channel needs none.
 - **One screenshot per step**, written to an evidence directory outside Git.
 - **Long real work gets a long, explicit timeout** on that one assertion, not a
   global one.
+- **A PDF or other binary upload** uses the same `setInputFiles` call with the
+  file's bytes and its real MIME type.
+- **One helper for "drop and wait until ready"**, shared by every spec, so the
+  wait-like-a-person rule is written once.
+- **The test run keeps its own data file.** Point the application at a log or
+  database inside the evidence directory for that run. Test approvals then
+  never mix with the owner's real records, and counts in assertions start
+  from zero.
+- **Several short specs, one runner script.** Each spec is gated by its own
+  environment switch; the script runs them in the order the real state needs
+  (read-only checks first, then the forced failure, then the real change, then
+  the checks that need the change).
 
 ## Real effects stay behind a switch
 

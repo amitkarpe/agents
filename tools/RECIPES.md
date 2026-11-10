@@ -211,6 +211,12 @@ to satisfy a search.
 | Display with `bat`/`eza` or diff viewers | Convenience, not validation or tracked ownership proof |
 | Filesystem event with `inotifywait`/`watchexec` | Bounded authorized local watch, followed by content/version readback |
 
+**AWS CLI counts and pages.** `--query 'length(items)' --output text` prints one
+number per page of results, so a count of one can arrive as `1`, a newline and
+`0`, and a test for the string `1` never matches. Use `--output json` for a
+count (the query then runs once over all pages), or count the lines of a text
+list. A wait loop built on the wrong form does not fail; it waits to its limit.
+
 A single authorized event wait might be:
 
 ```bash
