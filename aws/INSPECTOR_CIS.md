@@ -179,6 +179,16 @@ not expected constants.
 | No actionable control-plane error | Current plugin/SSM logs and target invocation | Keep source and timestamp correlation; control-plane completion can hide a node-side failure |
 | Marketplace image cannot launch | Target account's product entitlement/subscription and launch permission | IAM administration is not license acceptance; use the approved current procurement path |
 
+**Package findings on a new instance (not CIS).** In one lab run, two minutes
+after launch the instance showed active coverage and a plausible finding count,
+while a filtered findings list still lacked some CVE entries and listed others
+for only one of two identical instances. A few minutes later the list was
+complete. Do not report "no finding" for a new instance as "not affected":
+compare the installed package version on the node, and report "scanner not
+finished" when the two disagree. After a package update, a second check on the
+node is immediate; the scanner's agreement follows later and should be recorded
+as a separate, later fact.
+
 The source located Linux CIS diagnostics in
 `/var/log/amazon/inspector/scitor.log.*`. Treat this as an installation-specific
 log-location clue; confirm the current package and newest attempt. Logs may

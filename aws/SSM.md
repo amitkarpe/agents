@@ -190,6 +190,22 @@ output is not proof the node did nothing.
 | No credentials / access denied inside command | Node role versus Automation/control role; exact resource permission | Assuming the controller's credentials are inherited by the node |
 | Private download unavailable | Approved in-Region S3/internal mirror, endpoint/bucket policy and exact object access | Adding public egress or a new unapproved source |
 | Repeated quoting errors | Isolate payload file; validate each receiving interpreter | Nested heredoc/JSON one-liners or unreviewed generated scripts |
+| Custom document is admitted, then fails on the node at once with response code `-1` and no output | The agent's own error log on the node. The agent compiles each `allowedPattern` itself and refuses a repetition count above 1000, also as the product of nested counts such as `(x{0,80}){0,39}` | Resending, or widening the pattern to "anything" |
+
+### Narrow documents for application-triggered changes
+
+When an application, or an AI agent behind one, must change a node, give it a
+small custom Command document with typed parameters and an `allowedPattern`,
+not a general shell document. The service then refuses a parameter with other
+characters before anything reaches a node (`InvalidParameters`).
+
+- Keep the pattern simple enough for the node agent: one character class with
+  a bounded count of 1000 or less, for example `^[A-Za-z0-9][A-Za-z0-9._+ -]{0,900}$`.
+- Enforce the stricter shape (item count, each item's form) in the caller too.
+- Pair every changing document with a read-only document that reports the
+  state, so the check can repeat while the change never does.
+- Prove the pattern on one node with the read-only document before the first
+  real change, and try one rejected value on purpose.
 
 Wait-only, output-only and send-with-explicit-timeout paths should remain
 separate in an existing wrapper. Missing wrappers are a capability gap to
@@ -237,6 +253,9 @@ Protect workload availability accordingly; a successful package install is
 not proof that Docker/containerd/application health stayed intact.
 
 ## Citations
+
+- [Systems Manager document parameters and allowedPattern](https://docs.aws.amazon.com/systems-manager/latest/userguide/documents-syntax-data-elements-parameters.html)
+- [Go regexp/syntax repetition limit](https://pkg.go.dev/regexp/syntax)
 
 - [Existing executable Run Command skill](https://github.com/amitkarpe/agent-skills/blob/main/skills/aws-ssm-run-command/SKILL.md)
 - [Pinned source payloads, recovery examples and failure lessons](https://github.com/amitkarpe/dotfiles/blob/5685eea054e1fbd4499ea4631e86014654f774d0/config/.config/agent/ssm.md)

@@ -225,6 +225,11 @@ command loop is not cloud/provider health proof and does not authorize a daemon.
 
 ## Interpreter and host boundaries
 
+Host defaults differ. On macOS the system Bash is 3.2, `sed` is the BSD one and
+the login shell is `zsh`; a snippet proven on Linux can fail there without an
+error that names the cause. The short list is in
+[Playwright on macOS or Linux](PLAYWRIGHT_LOCAL.md#macos-shell-differences-that-cost-time).
+
 The outer launcher parses a command before an inner interpreter sees it.
 `bash -lc` cannot protect shell syntax that the outer POSIX shell, JSON layer
 or PowerShell already expanded. Prefer structured tool arguments, small
