@@ -10,3 +10,5 @@ Use one temporary folder or worktree only when the task needs isolation.
 4. If uncommitted or unknown work remains, stop and ask. Never force-delete it.
 
 Core rule: **create temp -> work -> finish -> delete temp -> verify -> done**.
+
+For the full closeout checklist (branches, scratch files, release assets, lab resources, report line), see [Closeout cleanup](../AGENTS.md#closeout-cleanup).
