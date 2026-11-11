@@ -94,16 +94,16 @@ through Git; make them on the machine that uses them.
 | Leftover | Clean up |
 |---|---|
 | Worktrees and scratch folders | `git worktree remove` (no force, no `rm -rf`), then verify the paths are gone ([lifecycle](docs/temp-worktree-lifecycle.md)) |
-| Temporary branches | Local: delete when merged. Remote: only after its PR is merged or closed |
+| Temporary branches | Local: delete when merged. Remote: the branch this task made, after its PR is merged or closed. If the session is refused (403), keep it and put the exact delete command in Kept |
 | Large and scratch files | Renders, audio, caches, downloaded assets, copies in shared or project folders |
 | Test or replaced release assets | Replace, do not keep both; keep the final asset |
 | Lab resources | Use the repo's own down script; read back a count of 0. PROD and office accounts stay a stop gate |
 | Processes and background jobs | Stop the ones this task started, and its own timers and subscriptions |
 
 - Never delete what another person or session made. Never force-delete.
-- If unknown or uncommitted work remains, keep it and say so. Back up first when a deletion is not easy to undo.
+- If unknown or uncommitted work remains, keep it, say so in the report and do not force-delete it. Do not stop to ask. Back up first when a deletion is not easy to undo.
 - Files the owner asked to keep stay; list them in the report.
-- End the final report with one line: `Deleted: ...; Kept: ... (why)`.
+- End the final report with one line: `Deleted: ...; Kept: ... (why)`. If there is nothing, write `Deleted: none; Kept: none`.
 
 ## When editing this knowledge repository
 

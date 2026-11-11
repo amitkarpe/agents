@@ -7,7 +7,7 @@ Use one temporary folder or worktree only when the task needs isolation.
 2. When the task is merged, closed, completed, or abandoned, remove the
    worktree and its own temporary folder.
 3. Verify both paths are gone, then mark the task complete.
-4. If uncommitted or unknown work remains, stop and ask. Never force-delete it.
+4. If uncommitted or unknown work remains, keep it, say so in the report, and never force-delete it. Do not stop to ask.
 
 Core rule: **create temp -> work -> finish -> delete temp -> verify -> done**.
 
