@@ -81,6 +81,13 @@ people read) uses SGT and says so, for example `21:13 SGT` or
 Machine fields that a tool or API needs (ISO timestamps, cron in UTC) keep
 their own format; add the SGT time next to them when people read them.
 
+**Free tools only; never ask about paid plans.** Never offer, suggest, ask
+about or buy a licence, a paid plan or a subscription, for any tool or
+service. Do not put one on a question card or a choice button. Pick a free
+option (a free tier, open source, or plain standard tools). If only a paid
+tool would work, state it in one line as a limit, with no question. This is
+about licences and subscriptions only: cloud usage cost keeps its own gate.
+
 For a task coordinating G with a coding agent, read the
 [Collaboration Protocol](chatgpt/COLLABORATION.md) once when relevant. Reuse
 unchanged warm context; a link alone does not prove a read.
