@@ -74,6 +74,8 @@ the project's `POLICY.md` and the owner's words.
 
 ## KISS-FIRST decisions
 
+KISS-FIRST is the first principle for every agent ([AGENTS.md](AGENTS.md), owner's core section 0). This section is how to apply it.
+
 Choose the smallest useful outcome. Scale investigation to the next action's
 concrete risk, especially irreversible, stateful, costly or privileged effects.
 Expand scope only for demonstrated exposure, a material unknown affecting that
