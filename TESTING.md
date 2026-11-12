@@ -16,6 +16,13 @@ The default for an approved change is **zero new tests**, not zero validation.
 Use the smallest existing check or runtime evidence that can prove or disprove
 the changed behavior. Repository-mandated CI and safety checks still apply.
 
+**End to end, on the local machine, first.** The main proof is one repeatable
+script that runs the real flow end to end on the developer's machine (real
+browser, real lab read-back where it applies) and cleans up after itself.
+Hosted CI is slow; it is not the proof path. Write unit tests only for small,
+pure safety logic, such as the rule that decides whether a result is an
+all-clear. Do not add many small unit tests to show coverage.
+
 ## Decide whether a new test is needed
 
 Before adding or modifying a test, establish:
