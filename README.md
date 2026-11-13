@@ -35,7 +35,7 @@ Knowledge is at the root or **one subject directory**. There is no active
 | AWS | [Inspector/CIS](aws/INSPECTOR_CIS.md), [SSM and NoReboot](aws/SSM.md), [Images and sharing](aws/IMAGES.md), [Toolkit](aws/TOOLKIT.md), [AgentCore](aws/AGENTCORE.md), [OIDC and durable control](aws/OIDC.md) |
 | Codex | [Sessions and Goals](codex/SESSIONS.md), [Native delegation](codex/DELEGATION.md), [Worker control](codex/CONTROL.md), [Skills](codex/SKILLS.md) |
 | ChatGPT | [Collaboration](chatgpt/COLLABORATION.md), [Projects](chatgpt/PROJECTS.md), [Automations](chatgpt/AUTOMATIONS.md) |
-| Tools | [Recipes and Git-aware search](tools/RECIPES.md), [Browser evidence](tools/BROWSER.md), [Playwright/WSL](tools/PLAYWRIGHT.md), [Playwright on macOS/Linux](tools/PLAYWRIGHT_LOCAL.md), [X/Grok research](tools/RESEARCH.md), [RTK/raw output](tools/RTK.md), [Private artifacts](tools/PRIVATE_ARTIFACTS.md), [Presentations](tools/PRESENTATIONS.md), [Email](tools/EMAIL.md) |
+| Tools | [Agent capabilities and the "can't" preflight](tools/CAPABILITIES.md), [Recipes and Git-aware search](tools/RECIPES.md), [Browser evidence](tools/BROWSER.md), [Playwright/WSL](tools/PLAYWRIGHT.md), [Playwright on macOS/Linux](tools/PLAYWRIGHT_LOCAL.md), [X/Grok research](tools/RESEARCH.md), [RTK/raw output](tools/RTK.md), [Private artifacts](tools/PRIVATE_ARTIFACTS.md), [Presentations](tools/PRESENTATIONS.md), [Email](tools/EMAIL.md) |
 | Kiro | [Worker scope, artifacts and recovery](kiro/WORKERS.md) |
 | OpenCode | [Worker JSONL, liveness and recovery](opencode/WORKERS.md) |
 
