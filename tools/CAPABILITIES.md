@@ -46,6 +46,13 @@ A brief that gives tool work to an agent says this in one line.
 - Keep **full CDP access off** for films. Turn it on only for a task that needs deep browser control, then off again.
 - **Verify every clip:** run a full `ffmpeg -i f -f null -` decode, sample frames, and find state changes with `freezedetect`. A contact sheet alone is not proof that the video is good.
 
+## Browsers and accounts (13 Nov 2026 tests)
+
+- **Two AWS accounts without multi-session:** each browser keeps its own cookies. The Claude app's built-in browser pane, the Codex/ChatGPT in-app browser and the user's Chrome can each stay signed in to a different account at the same time. Agree which browser holds which account before a task.
+- **Codex in-app browser:** after the user signed in there, Codex used the existing AWS console tab read-only (AgentCore Create Harness page, 1544 × 777 viewport).
+- **Chrome on another Desktop (Space):** Codex controlled a Chrome window on macOS Desktop 2 through its Chrome integration while the user worked in Chrome on Desktop 1. It switched views and saved an unsent draft, then restored the tab. Control works across Spaces; *recording* an inactive Space is still not verified.
+- **Window-capture recipe:** merged in video-factory PR 72 (`docs/COMPUTER_USE.md`).
+
 ## Keep it current
 
 When a test proves or disproves a cell, update that cell with the date in one line. Add a surface (for example Grok or Devin) only after a real round-trip test.
