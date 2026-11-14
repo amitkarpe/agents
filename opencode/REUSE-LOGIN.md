@@ -2,7 +2,7 @@
 type: Playbook
 title: Reuse OpenCode login and sessions with OPENCODE_TOKEN
 status: candidate
-confidence: medium
+confidence: high
 scope: Key-based OpenCode login for cloud sessions/VMs, no device code; session reuse
 review_after: 2027-02-14
 tags: [opencode, opencode-v2, login, token, sessions, cloud]
@@ -24,6 +24,16 @@ from zero. Entry point stays [HANDOFF.md](HANDOFF.md).
 
 The key is the OpenCode Console (Go plan) API key. Only the owner creates or
 rotates it, in the Console.
+
+## 0. Fresh container: install V2 (tested 14 Nov 2026, v2.3.0)
+
+```bash
+command -v opencode || npm i -g opencode-ai@latest
+opencode --version | grep -q '^opencode v2\.' || opencode upgrade --major
+```
+
+In a Claude cloud session `OPENCODE_TOKEN` is already in the environment
+(from the environment settings); skip sourcing `~/.env`.
 
 ## 2. Load the key without printing it
 
@@ -93,7 +103,6 @@ Move context to another machine (only if needed):
 | Option | Secret risk | Note |
 |---|---|---|
 | Same VM, keep `~/.local/share/opencode` | low | best; do not destroy the VM |
-| `opencode export $SESSION_ID > s.json` then `opencode import s.json` | ⚠️ transcript may hold data | copy by `scp`, never commit |
 | Summary in the GitHub Issue/PR | none | durable, works across hosts and teams |
 
 ## 6. For other teams (e.g. Nextflow offline work)
@@ -102,6 +111,15 @@ Move context to another machine (only if needed):
 2. Team puts it in `~/.env` as `OPENCODE_TOKEN`, runs step 2 and step 3.
 3. Team follows HANDOFF.md roles: one doer, optional read-only adviser.
 4. Real engagement or sensitive data goes only to approved models.
+
+## Test log (14 Nov 2026, cloud container)
+
+| Step | Result |
+|---|---|
+| `OPENCODE_API_KEY="$OPENCODE_TOKEN"` + `opencode run` | ✅ `OK` |
+| `auth.json` only (env unset) | ✅ `OK` |
+| `opencode session list` → `run -s ses_...` | ✅ recalled earlier context |
+| `opencode export` | ❌ not in V2 CLI; use Issue/PR summary |
 
 ## 7. Never
 
