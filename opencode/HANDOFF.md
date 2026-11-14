@@ -184,4 +184,5 @@ The adviser is optional. The doer remains autonomous inside the approved scope.
 
 - [WORKERS.md](WORKERS.md) — models, CLI, launch and recovery.
 - [SESSION-API.md](SESSION-API.md) — sessions, prompt/read, receipts and scripts.
+- [REUSE-LOGIN.md](REUSE-LOGIN.md) — key login (no device code) and session reuse.
 - [Goals and Delegation](../GOALS.md) — shared task/result contract.
