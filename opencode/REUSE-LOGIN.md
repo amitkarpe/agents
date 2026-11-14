@@ -1,7 +1,7 @@
 ---
 type: Playbook
 title: Reuse OpenCode login and sessions with OPENCODE_TOKEN
-status: tested
+status: candidate
 confidence: high
 scope: Key-based OpenCode login for cloud sessions/VMs, no device code; session reuse
 review_after: 2027-02-14

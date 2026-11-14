@@ -1,3 +1,13 @@
+---
+type: Playbook
+title: Prompt to delegate routine work to OpenCode
+status: candidate
+confidence: high
+scope: Paste-in prompt for a new cloud session; token login, no device flow
+review_after: 2027-02-14
+tags: [opencode, opencode-v2, delegation, prompt]
+---
+
 # Prompt: delegate routine work to OpenCode (paste into a new Claude cloud session)
 
 ```text
